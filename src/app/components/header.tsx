@@ -1,29 +1,30 @@
-import { Box, Link } from "@chakra-ui/react";
+"use client";
 
-const Header = () => {
+import { Box } from "@chakra-ui/react";
+import AppLogo from "./logo";
+
+const Header = (): JSX.Element => {
   return (
     <Box
       as="header"
-      width="100%"
       id={`header`}
-      className={`bg-neutral-50 z-10 sticky top-0`}
+      bg="gray.50"
+      position="sticky"
+      top={0}
+      zIndex={10}
+      w="100%"
     >
       <Box
-        mx="auto"
-        p={4}
-        width="100%"
-        maxW="1024px"
+        id={`header__inner`}
         display="flex"
         alignItems="center"
         justifyContent="space-between"
-        id={`header__inner`}
+        mx="auto"
+        p={4}
+        w="100%"
+        maxW="1024px"
       >
-        <h1 id={`header__logo`} className={`text-center inline-block`}>
-          <Link href={`/`}>
-            <span className={`block font-bold text-2xl`}>📚デジダナ!!</span>
-            <span className={`block text-base`}>- Digital Hondana -</span>
-          </Link>
-        </h1>
+        <AppLogo />
         <nav id={`header__navi`}>メニュー</nav>
       </Box>
     </Box>

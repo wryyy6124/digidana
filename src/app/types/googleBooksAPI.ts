@@ -1,3 +1,5 @@
+type gBooksAPI = string | undefined;
+
 type gBookType = {
   totalItems: number;
   items: Array<gBookItem>;
@@ -11,9 +13,9 @@ type gBookItem = {
 
 type volumeInfoList = {
   title: string;
-  authors?: string[];
-  publishedDate?: string;
-  description?: string;
+  authors?: string[] | undefined;
+  publishedDate?: gBooksAPI;
+  description?: gBooksAPI;
   imageLinks?: {
     thumbnail: string;
   };

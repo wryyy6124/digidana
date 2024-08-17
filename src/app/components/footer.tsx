@@ -1,14 +1,20 @@
-import { Box } from "@chakra-ui/react";
+"use client";
 
-const Footer = () => {
+import { Box, Text } from "@chakra-ui/react";
+
+const Footer = (): JSX.Element => {
   return (
     <Box
       as="footer"
-      width="100%"
       id={`footer`}
-      className={`fixed bottom-0 bg-neutral-50`}
+      bg="gray.50"
+      position="fixed"
+      bottom={0}
+      zIndex={10}
+      w="100%"
     >
       <Box
+        id={`footer__inner`}
         mx="auto"
         p={6}
         width="100%"
@@ -16,11 +22,10 @@ const Footer = () => {
         display="flex"
         alignItems="center"
         justifyContent="center"
-        id={`footer__inner`}
       >
-        <p id={`footer__copylight`}>
+        <Text as="p" id={`footer__copylight`}>
           <strong>digidana &copy;K.T</strong>
-        </p>
+        </Text>
       </Box>
     </Box>
   );
