@@ -47,13 +47,13 @@ export default function PravatePage() {
   return (
     <>
       <Header />
-      <Box as="main" id={`seriesRegistration`} width="100%">
+      <Box as="main" id={`seriesRegistration`} width="full">
         <Box
           id={`seriesRegistration`}
           mx="auto"
           p={8}
           pb={32}
-          width="100%"
+          width="full"
           maxW="1024px"
         >
           {mail ? <p>【Email】 {mail}</p> : <p>Loading...</p>}

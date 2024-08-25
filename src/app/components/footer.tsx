@@ -11,13 +11,13 @@ const Footer = (): JSX.Element => {
       position="fixed"
       bottom={0}
       zIndex={10}
-      w="100%"
+      w="full"
     >
       <Box
         id={`footer__inner`}
         mx="auto"
         p={6}
-        width="100%"
+        w="full"
         maxW="1024px"
         display="flex"
         alignItems="center"

@@ -65,7 +65,6 @@ export async function signup(formData: FormData): Promise<string> {
 
 export async function logoff(): Promise<void> {
   const supabase = supabaseServer();
-
   const { error } = await supabase.auth.signOut();
 
   if (error) {

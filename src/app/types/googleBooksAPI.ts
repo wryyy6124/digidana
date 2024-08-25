@@ -12,15 +12,18 @@ type gBookItem = {
 };
 
 type volumeInfoList = {
+  id: string;
   title: string;
   authors?: string[] | undefined;
+  publisher?: string;
   publishedDate?: gBooksAPI;
   description?: gBooksAPI;
   imageLinks?: {
     thumbnail: string;
   };
+  infoLink: string;
   seriesInfo: {
-    volumeSeries?: [
+    volumeSeries: [
       {
         seriesId: string;
         orderNumber: number;

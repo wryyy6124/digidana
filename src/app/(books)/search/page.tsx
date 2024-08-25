@@ -2,7 +2,6 @@
 
 import { supabaseServer } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-
 import SearchBooksPage from "./components/searchBooksPage";
 
 const SearchBooks = async (): Promise<JSX.Element> => {

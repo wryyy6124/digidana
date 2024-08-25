@@ -16,6 +16,8 @@ const Login = async (): Promise<JSX.Element> => {
     redirect("/");
   }
 
+  console.log(session);
+
   return <LoginPage />;
 };
 

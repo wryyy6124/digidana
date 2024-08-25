@@ -10,13 +10,13 @@ const SeriesIdPage = (): JSX.Element => {
   return (
     <>
       <Header />
-      <Box as="main" id={`SeriesIdPage`} width="100%">
+      <Box as="main" id={`SeriesIdPage`} width="full">
         <Box
           id={`SeriesIdPage__inner`}
           mx="auto"
           p={8}
           pb={32}
-          width="100%"
+          width="full"
           maxW="1024px"
         >
           <Text

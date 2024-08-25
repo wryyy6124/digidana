@@ -17,7 +17,7 @@ const LoginPage = (): JSX.Element => {
         alignItems="center"
         justifyContent="center"
         flexDirection="column"
-        w="100%"
+        w="full"
         minH="100vh"
       >
         <VStack
@@ -25,10 +25,10 @@ const LoginPage = (): JSX.Element => {
           border="1px"
           borderColor="gray.400"
           rounded="md"
-          w="100%"
+          w="full"
           maxWidth="xl"
         >
-          <Flex justifyContent="center" mb={8} w="100%">
+          <Flex justifyContent="center" mb={8} w="50%">
             <AppLogo />
           </Flex>
           {isLogin ? (
