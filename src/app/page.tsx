@@ -10,8 +10,6 @@ const HomeServer = async (): Promise<JSX.Element> => {
     data: { session },
   } = await supabase.auth.getSession();
 
-  console.log(session);
-
   try {
     if (session) {
       const { data, error } = await supabase.from("volumes").select();
@@ -19,8 +17,6 @@ const HomeServer = async (): Promise<JSX.Element> => {
       if (error) {
         console.error("Error fetching books:", error);
       }
-
-      // console.log(user);
 
       return <HomePage books={data || []} />;
     } else {

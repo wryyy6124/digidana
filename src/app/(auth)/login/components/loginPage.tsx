@@ -4,16 +4,20 @@ import { useState } from "react";
 import { Flex, VStack, Text } from "@chakra-ui/react";
 
 import AppLogo from "@/app/components/logo";
+
 import { LoginForm } from "./loginForm";
 import { SignupForm } from "./signupForm";
 
 const LoginPage = (): JSX.Element => {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState<boolean>(true);
   const toggleForm = () => setIsLogin(!isLogin);
 
   return (
     <>
       <Flex
+        backgroundImage={`/bg.jpg`}
+        backgroundSize="cover"
+        backgroundPosition="center"
         alignItems="center"
         justifyContent="center"
         flexDirection="column"
@@ -21,10 +25,11 @@ const LoginPage = (): JSX.Element => {
         minH="100vh"
       >
         <VStack
-          p={8}
+          bg="white"
           border="1px"
           borderColor="gray.400"
           rounded="md"
+          p={8}
           w="full"
           maxWidth="xl"
         >

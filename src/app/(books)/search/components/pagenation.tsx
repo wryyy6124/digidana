@@ -22,15 +22,15 @@ const Pagination = ({
     pb={8}
     w="full"
   >
-    {[...Array(totalPages)].map((_, index) => (
+    {[...Array(totalPages)].map((_, i) => (
       <Button
-        key={index}
-        onClick={() => handlePageChange(index + 1)}
-        isDisabled={currentPage === index + 1}
-        colorScheme={currentPage === index + 1 ? "blue" : "gray"}
+        key={i}
+        onClick={() => handlePageChange(i + 1)}
+        isDisabled={currentPage === i + 1}
+        colorScheme={currentPage === i + 1 ? "blue" : "gray"}
         flexShrink={1}
       >
-        {index + 1}
+        {i + 1}
       </Button>
     ))}
   </Box>

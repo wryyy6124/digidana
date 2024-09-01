@@ -1,32 +1,68 @@
 "use client";
 
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
+
+import { AiFillGoogleCircle } from "react-icons/ai";
+import { FaReact, FaWindows } from "react-icons/fa";
+import { IoLogoJavascript } from "react-icons/io5";
+import { LiaGithub } from "react-icons/lia";
+import { PiFileCssFill, PiFileHtmlFill } from "react-icons/pi";
+
+import {
+  RiNextjsFill,
+  RiSupabaseLine,
+  RiTailwindCssFill,
+} from "react-icons/ri";
+
+import { SiAdobephotoshop, SiChakraui } from "react-icons/si";
+import { TbBrandVercel } from "react-icons/tb";
+import { VscVscode } from "react-icons/vsc";
 
 const Footer = (): JSX.Element => {
   return (
     <Box
       as="footer"
       id={`footer`}
-      bg="gray.50"
+      bg="white"
       position="fixed"
       bottom={0}
-      zIndex={10}
+      zIndex={2}
       w="full"
     >
-      <Box
+      <Flex
         id={`footer__inner`}
-        mx="auto"
-        p={6}
-        w="full"
-        maxW="1024px"
-        display="flex"
+        fontSize="sm"
         alignItems="center"
-        justifyContent="center"
+        justifyContent="space-between"
+        gap={10}
+        mx="auto"
+        p={3}
+        w="full"
+        maxW="1280px"
       >
         <Text as="p" id={`footer__copylight`}>
-          <strong>digidana &copy;K.T</strong>
+          <Box as="strong">DigiDana - &copy;K.T</Box>
         </Text>
-      </Box>
+        <Flex flexDirection="column" gap={2}>
+          <Text fontWeight="bold">Created by</Text>
+          <Flex flexDirection="row" gap={1}>
+            <PiFileHtmlFill />
+            <PiFileCssFill />
+            <IoLogoJavascript />
+            <FaReact />
+            <RiNextjsFill />
+            <SiChakraui />
+            <RiTailwindCssFill />
+            <RiSupabaseLine />
+            <AiFillGoogleCircle />
+            <VscVscode />
+            <LiaGithub />
+            <SiAdobephotoshop />
+            <FaWindows />
+            <TbBrandVercel />
+          </Flex>
+        </Flex>
+      </Flex>
     </Box>
   );
 };

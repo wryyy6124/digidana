@@ -12,5 +12,5 @@ type booksType = {
   order_number: number;
   description: string;
   infoLink: string;
-  no: string;
+  id: string;
 };

@@ -1,9 +1,10 @@
 "use server";
 
 import { supabaseServer } from "@/utils/supabase/server";
-const supabase = supabaseServer();
 
 export const register = async (book: gBookItem): Promise<string> => {
+  const supabase = supabaseServer();
+
   try {
     const { data: existingBook, error: fetchError } = await supabase
       .from("volumes")
@@ -12,16 +13,13 @@ export const register = async (book: gBookItem): Promise<string> => {
       .single();
 
     if (fetchError && fetchError.code !== "PGRST116") {
+      console.log(fetchError);
       throw fetchError;
     }
 
-    if (existingBook) {
-      // console.error("この書籍は既に登録されています。:", fetchError);
-      // alert("この書籍は既に登録されています。");
-      return "この書籍は既に登録済みです！";
-    }
+    if (existingBook) return "この書籍は既に登録済みです！";
 
-    const { data, error } = await supabase.from("volumes").insert([
+    const { error: volumesError } = await supabase.from("volumes").insert([
       {
         volume_id: book.id,
         title: book.volumeInfo.title,
@@ -40,16 +38,46 @@ export const register = async (book: gBookItem): Promise<string> => {
       },
     ]);
 
-    if (error) {
-      throw error;
+    if (volumesError) {
+      console.log(volumesError);
+      throw volumesError;
     }
 
-    console.log("登録データ:", book);
+    if (book.volumeInfo.seriesInfo) {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-    return "データベースへ登録が完了しました！🥳";
+      const { data: existingSeries, error: seriesError } = await supabase
+        .from("series")
+        .select("user_id, series_id")
+        .eq("series_id", book.volumeInfo.seriesInfo.volumeSeries[0].seriesId)
+        .eq("user_id", user?.id)
+        .single();
+
+      if (seriesError && seriesError.code !== "PGRST116") {
+        throw seriesError;
+      }
+
+      if (!existingSeries) {
+        await supabase.from("series").insert([
+          {
+            series_id: book.volumeInfo.seriesInfo.volumeSeries[0].seriesId,
+            user_id: user?.id,
+            series_title: book.volumeInfo.title.replace(
+              /(\s*[\(\（]?\d+[\)\）]?\s?)$/,
+              ""
+            ),
+          },
+        ]);
+
+        return "シリーズ登録と書籍データの登録が完了しました！🥳";
+      }
+    }
+
+    return "書籍データの登録が完了しました！🥳";
   } catch (error) {
-    console.log("エラーメッセージ:", error);
-
+    console.error("エラーメッセージ:", error);
     return "処理が異常終了しました";
   }
 };

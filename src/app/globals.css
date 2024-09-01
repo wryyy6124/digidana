@@ -2,12 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
-img {
-  width: 100%;
-  max-width: fit-content;
+/* html {
+  scrollbar-gutter: stable;
+} */
+
+html:has(dialog:modal) {
+  overflow: hidden;
 }
 
 body {
   font-family: "Helvetica Neue", "Helvetica", "Hiragino Sans",
     "Hiragino Kaku Gothic ProN", "Arial", "Yu Gothic", "Meiryo", sans-serif;
+  overflow-y: scroll;
+}
+
+html,
+body {
+  height: 100vh;
+  max-height: 100vh;
+}
+
+img {
+  user-select: none;
+  width: 100%;
+  max-width: fit-content;
+  height: auto;
 }

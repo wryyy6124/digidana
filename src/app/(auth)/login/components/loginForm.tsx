@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { Button, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Text, VStack } from "@chakra-ui/react";
 
 import { login } from "../actions";
 import { InputField } from "./inputField";
@@ -25,12 +25,12 @@ export const LoginForm = (): JSX.Element => {
   return (
     <>
       <VStack id={`login__inner`} w="100%" maxWidth="xl">
-        <form id={`login__form`} className="w-full" onSubmit={handleLogin}>
-          <VStack id={`login__form__wrapper`} mx="auto" w="100%" spacing={12}>
+        <Box as="form" onSubmit={handleLogin} id={`login__form`} w="full">
+          <VStack id={`login__form__wrapper`} mx="auto" w="full" spacing={12}>
             <VStack
               id={`login__form__input`}
               mx="auto"
-              w="100%"
+              w="full"
               spacing={4}
               alignItems="flex-start"
             >
@@ -80,7 +80,7 @@ export const LoginForm = (): JSX.Element => {
               </Button>
             </VStack>
           </VStack>
-        </form>
+        </Box>
       </VStack>
       {errorMessage && (
         <Text color="red.500" fontSize="md" fontWeight="bold" mt={4}>

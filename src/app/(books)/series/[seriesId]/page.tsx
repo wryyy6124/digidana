@@ -13,8 +13,6 @@ const Series = async (): Promise<JSX.Element> => {
     error,
   } = await supabase.auth.getUser();
 
-  console.log(user);
-
   if (!user || error) {
     redirect("/login");
   }

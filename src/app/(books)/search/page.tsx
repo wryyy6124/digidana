@@ -2,6 +2,7 @@
 
 import { supabaseServer } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+
 import SearchBooksPage from "./components/searchBooksPage";
 
 const SearchBooks = async (): Promise<JSX.Element> => {
@@ -13,8 +14,10 @@ const SearchBooks = async (): Promise<JSX.Element> => {
   } = await supabase.auth.getUser();
 
   if (!user || error) {
+    console.log(`Un Authenticated...`);
     redirect("/login");
   }
+  console.log(`Verified!!`);
 
   return <SearchBooksPage />;
 };

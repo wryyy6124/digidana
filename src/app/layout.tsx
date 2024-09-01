@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 
-import { Inter } from "next/font/google";
+import { Zen_Maru_Gothic } from "next/font/google";
 import { ChakuraUIProviders } from "./components/uiProviders";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const ZenKakuGothicNew = Zen_Maru_Gothic({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "デジダナ - digital hondana -",
@@ -18,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body id={`pages`} className={`${inter.className}`}>
+      <body id={`pages`} className={`${ZenKakuGothicNew.className}`}>
         <ChakuraUIProviders>{children}</ChakuraUIProviders>
       </body>
     </html>

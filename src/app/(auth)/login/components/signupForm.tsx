@@ -1,17 +1,18 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { Button, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Text, VStack } from "@chakra-ui/react";
 
 import { signup } from "../actions";
 import { InputField } from "./inputField";
 
 export const SignupForm = (): JSX.Element => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const handleSignup = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
+
     setIsLoading(true);
     setErrorMessage(null);
 
@@ -25,12 +26,12 @@ export const SignupForm = (): JSX.Element => {
   return (
     <>
       <VStack id={`signup__inner`} w="100%">
-        <form id={`signup__form`} className="w-full" onSubmit={handleSignup}>
-          <VStack id={`signup__form__wrapper`} mx="auto" w="100%" spacing={12}>
+        <Box as="form" onSubmit={handleSignup} id={`signup__form`} w="full">
+          <VStack id={`signup__form__wrapper`} mx="auto" w="full" spacing={12}>
             <VStack
               id={`login__form__input`}
               mx="auto"
-              w="100%"
+              w="full"
               spacing={4}
               alignItems="flex-start"
             >
@@ -88,7 +89,7 @@ export const SignupForm = (): JSX.Element => {
               </Button>
             </VStack>
           </VStack>
-        </form>
+        </Box>
         {errorMessage && (
           <Text color="red.500" fontSize="md" fontWeight="bold" mt={4}>
             {errorMessage}
