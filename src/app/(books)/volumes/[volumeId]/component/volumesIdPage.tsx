@@ -5,15 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { supabaseClient } from "@/utils/supabase/client";
 
-import {
-  Box,
-  Button,
-  Heading,
-  Flex,
-  Image,
-  Link,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Image, Link, Text } from "@chakra-ui/react";
 
 import { BsGooglePlay } from "react-icons/bs";
 import { LiaDoorOpenSolid } from "react-icons/lia";
@@ -31,55 +23,50 @@ const VolumesIdPage = ({ volume }: { volume: booksType }): JSX.Element => {
   return (
     <>
       <Header />
-      <Box as="main" w="full" pt={100}>
+      <Box as="main" w="full" py={100}>
         <Flex
+          justifyContent={{ sm: "center", md: "flex-end" }}
+          alignItems="center"
           mx="auto"
           mb={6}
-          justifyContent="flex-end"
-          alignItems="center"
-          pr={6}
           w="full"
-          maxW="800px"
+          maxW="768px"
         >
-          <Button
-            as={Link}
-            href="/"
-            leftIcon={<LiaDoorOpenSolid />}
-            colorScheme="blue"
-            variant="outline"
-            size="lg"
-          >
-            トップページへ戻る
-          </Button>
+          <Link href={`/`}>
+            <Button
+              colorScheme="blue"
+              size="lg"
+              leftIcon={<LiaDoorOpenSolid />}
+              variant="outline"
+            >
+              トップページへ
+            </Button>
+          </Link>
         </Flex>
         {volume && (
           <Flex
             bg="white"
             borderTop="1px"
-            borderTopColor="gray.100"
-            borderRadius="md"
+            borderTopColor="gray.200"
+            borderRadius={{ sm: "none", md: "md" }}
             boxShadow="md"
             flexFlow="column"
             gap={6}
             mx="auto"
             p={6}
             w="full"
-            maxW="800px"
+            maxW="768px"
           >
             <>
-              <Flex flexFlow="column" gap={4}>
-                <Heading as="h2" size="xl">
+              <Flex flexFlow="column" gap={2}>
+                <Text as="h2" fontSize="3xl" fontWeight="bold">
                   {volume.title}
-                </Heading>
-                <Flex gap={4}>
+                </Text>
+                <Flex gap={4} fontSize="md" color="gray.600">
                   {volume.publishedDate && (
-                    <Text fontSize="md" color="gray.600" mb={4}>
-                      発売日: {volume.publishedDate}
-                    </Text>
+                    <Text>発売日: {volume.publishedDate}</Text>
                   )}
-                  <Text fontSize="md" color="gray.600" mb={4}>
-                    著者: {volume.authors}
-                  </Text>
+                  <Text>著者: {volume.authors}</Text>
                 </Flex>
               </Flex>
               <Flex alignItems="center" gap={10}>
@@ -87,8 +74,8 @@ const VolumesIdPage = ({ volume }: { volume: booksType }): JSX.Element => {
                   <Image
                     src={volume.thumbnail_url}
                     alt={volume.title}
+                    borderRadius="lg"
                     objectFit="cover"
-                    borderRadius="md"
                     w="full"
                     h="100%"
                   />
@@ -96,8 +83,8 @@ const VolumesIdPage = ({ volume }: { volume: booksType }): JSX.Element => {
                   <Image
                     src="/not_image.jpg"
                     alt="notimage"
-                    objectFit="cover"
                     borderRadius="md"
+                    objectFit="cover"
                     w="full"
                     h="100%"
                   />

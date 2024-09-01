@@ -9,15 +9,14 @@ import Pagination from "./pagenation";
 import {
   Box,
   Button,
+  Flex,
+  Text,
+  Image,
   Input,
   InputGroup,
   InputRightElement,
   UnorderedList,
   ListItem,
-  Text,
-  Image,
-  Flex,
-  Heading,
 } from "@chakra-ui/react";
 
 import { Search2Icon } from "@chakra-ui/icons";
@@ -26,8 +25,9 @@ import { motion } from "framer-motion";
 import { register } from "../actions";
 import MessageModal from "./messageModal";
 
-import { useRouter } from "next/navigation";
 import { AiOutlineFileSearch } from "react-icons/ai";
+import { useRouter } from "next/navigation";
+import { MdAppRegistration } from "react-icons/md";
 
 const ITEMS_PER_PAGE = 8;
 const apiKey: gBooksAPI = process.env.NEXT_PUBLIC_GOOGLE_BOOKS_API_KEY;
@@ -49,7 +49,7 @@ const SearchBooksPage = (): JSX.Element => {
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const paginatedBooks = books.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
-  const handlePageChange = (page: number) => {
+  const handlePageChange = (page: number): void => {
     setCurrentPage(page);
 
     setTimeout(() => {
@@ -88,7 +88,7 @@ const SearchBooksPage = (): JSX.Element => {
 
       const data: gBookType = await res.json();
 
-      const sortingBooks = data.items
+      const sortingBooks: gBookItem[] = data.items
         .filter((item) =>
           item.volumeInfo.title.toLowerCase().includes(query.toLowerCase())
         )
@@ -97,6 +97,7 @@ const SearchBooksPage = (): JSX.Element => {
             a.volumeInfo.seriesInfo &&
             a.volumeInfo.seriesInfo.volumeSeries?.[0]?.orderNumber !==
               undefined;
+
           const hasSeriesInfoB =
             b.volumeInfo.seriesInfo &&
             b.volumeInfo.seriesInfo.volumeSeries?.[0]?.orderNumber !==
@@ -141,9 +142,9 @@ const SearchBooksPage = (): JSX.Element => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [modalMessage, setModalMessage] = useState<string>("");
 
-  const onClose = () => setIsOpen(false);
+  const onClose = (): void => setIsOpen(false);
 
-  const registerBook = async (book: gBookItem) => {
+  const registerBook = async (book: gBookItem): Promise<void> => {
     const result = await register(book);
 
     setModalMessage(result);
@@ -155,61 +156,59 @@ const SearchBooksPage = (): JSX.Element => {
   return (
     <>
       <Header />
-      <Box as="main" id={`seriesRegistration`} w="full" pt={100}>
+      <Box as="main" id={`seriesRegistration`} w="full" py={100}>
         <Box
           id={`seriesRegistration`}
           mx="auto"
           p={8}
           pb={32}
-          width="full"
+          w="full"
           maxW="1024px"
         >
-          <Heading
+          <Text
             as="h2"
             id={`volumesIdPage__header`}
+            display="flex"
+            alignItems="center"
+            gap={2}
             fontSize="2xl"
             fontWeight="bold"
             mb={4}
           >
-            <AiOutlineFileSearch className="inline mr-2" />
+            <AiOutlineFileSearch className="mt-2" />
             書籍検索
-          </Heading>
+          </Text>
 
-          <InputGroup
-            id="searchBooksPage__input"
-            width="full"
-            size="md"
-            mb={10}
-          >
+          <InputGroup id={`searchBooksPage__input`} size="md" mb={10} w="full">
             <Input
               type="text"
-              p="1.5em"
-              pr="6rem"
-              placeholder="検索したい書籍名を入力してください。"
               value={query}
               onChange={(e: ChangeEvent<HTMLInputElement>): void =>
                 setQuery(e.target.value)
               }
-              focusBorderColor="green.500"
+              placeholder="検索したい書籍名を入力してください。"
               _placeholder={{ color: "gray.500" }}
               borderRadius="lg"
               boxShadow="sm"
+              flex="1"
+              p="1.5em"
+              pr="6rem"
+              focusBorderColor="green.500"
+              _focus={{
+                boxShadow: "0 0 0 3px rgba(72, 187, 120, 0.6)",
+              }}
               _hover={{
                 borderColor: "green.400",
                 boxShadow: "md",
               }}
-              _focus={{
-                boxShadow: "0 0 0 3px rgba(72, 187, 120, 0.6)",
-              }}
-              flex="1"
             />
-            <InputRightElement width="auto" h="100%">
+            <InputRightElement w="auto" h="100%">
               <Button
-                size="md"
-                colorScheme="green"
-                borderRadius="0 10px 10px 0"
-                h="100%"
                 onClick={searchBooks}
+                size="md"
+                borderRadius="0 10px 10px 0"
+                colorScheme="green"
+                h="100%"
               >
                 <Search2Icon mr={2} />
                 検索
@@ -218,7 +217,7 @@ const SearchBooksPage = (): JSX.Element => {
           </InputGroup>
 
           {searchFlag ? (
-            <Box>
+            <Box id={`searchBooksPage__result`}>
               {totalPages > 1 && (
                 <Pagination
                   totalPages={totalPages}
@@ -228,10 +227,10 @@ const SearchBooksPage = (): JSX.Element => {
               )}
 
               <UnorderedList
-                id="searchBooksPage__list"
+                id={`searchBooksPage__list`}
                 spacing={6}
-                m={0}
                 styleType="none"
+                m={0}
               >
                 {loading ? (
                   <ListItem
@@ -260,7 +259,7 @@ const SearchBooksPage = (): JSX.Element => {
                       alignItems="flex-start"
                       gap={{ base: 8, md: 6 }}
                       p={{ base: 5, md: 6 }}
-                      minHeight="200px"
+                      minH="200px"
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1, duration: 0.3 }}
@@ -270,7 +269,7 @@ const SearchBooksPage = (): JSX.Element => {
                       }}
                     >
                       <Flex
-                        id="searchBooksPage__info"
+                        className={`searchBooksPage__info`}
                         flexDirection="row"
                         flexWrap="wrap"
                         justifyContent="space-between"
@@ -279,43 +278,44 @@ const SearchBooksPage = (): JSX.Element => {
                         gap={{ base: 0, md: 4 }}
                         mb={{ base: 4, md: 0 }}
                       >
-                        <Heading
+                        <Text
                           as="h2"
                           color="gray.700"
                           fontWeight="bold"
                           fontSize={{ base: "xl", md: "2xl" }}
                         >
                           {book.volumeInfo.title.trim()}
-                        </Heading>
-                        <Box
+                        </Text>
+                        <UnorderedList
                           display={{ base: "none", md: "flex" }}
                           flexDirection="row"
                           flexWrap="wrap"
                           gap={6}
+                          styleType="none"
                         >
                           {book.volumeInfo.authors && (
-                            <Text
+                            <ListItem
                               fontStyle="italic"
                               fontSize="sm"
                               color="gray.500"
                             >
                               著者：{book.volumeInfo.authors?.join(", ")}
-                            </Text>
+                            </ListItem>
                           )}
                           {book.volumeInfo.publishedDate && (
-                            <Text
+                            <ListItem
                               fontStyle="italic"
                               fontSize="sm"
                               color="gray.500"
                             >
                               発売日：
                               <time>{book.volumeInfo.publishedDate}</time>
-                            </Text>
+                            </ListItem>
                           )}
-                        </Box>
+                        </UnorderedList>
                       </Flex>
                       <Flex
-                        id="searchBooksPage__description"
+                        className={`searchBooksPage__description`}
                         flexDirection="row"
                         alignItems="stretch"
                         gap={{ base: 4, md: 6 }}
@@ -338,8 +338,8 @@ const SearchBooksPage = (): JSX.Element => {
                             />
                           ) : (
                             <Image
-                              src="/not_image.jpg"
-                              alt="NOT IMAFGE"
+                              src={`/not_image.jpg`}
+                              alt={`NOT IMAFGE`}
                               w="full"
                               h="auto"
                             />
@@ -381,9 +381,9 @@ const SearchBooksPage = (): JSX.Element => {
                         <Button
                           backgroundColor="blue.400"
                           color="white"
-                          position="relative"
+                          pos="relative"
                           overflow="hidden"
-                          p="0"
+                          p={0}
                           w="fit-content"
                           h="auto"
                           onClick={() => {
@@ -394,7 +394,7 @@ const SearchBooksPage = (): JSX.Element => {
                             content: `""`,
                             display: "inline-block",
                             transition: "0.5s",
-                            position: "absolute",
+                            pos: "absolute",
                             top: "0",
                             right: "100%",
                             w: "100%",
@@ -404,18 +404,20 @@ const SearchBooksPage = (): JSX.Element => {
                             _before: { right: "0" },
                           }}
                         >
-                          <Box
+                          <Flex
                             as="span"
                             color="white"
-                            display="block"
+                            alignItems="center"
+                            gap={2}
                             zIndex="1"
                             py={4}
                             px={8}
-                            w="100%"
+                            w="full"
                             h="auto"
                           >
+                            <MdAppRegistration className={`inline-block`} />
                             この書籍を登録する
-                          </Box>
+                          </Flex>
                         </Button>
                       </Flex>
                     </MotionListItem>

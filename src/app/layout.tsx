@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 
-import { Zen_Maru_Gothic } from "next/font/google";
 import { ChakuraUIProviders } from "./components/uiProviders";
+import { Zen_Maru_Gothic } from "next/font/google";
+
 import "./globals.css";
 
 const ZenKakuGothicNew = Zen_Maru_Gothic({
@@ -11,8 +12,8 @@ const ZenKakuGothicNew = Zen_Maru_Gothic({
 });
 
 export const metadata: Metadata = {
-  title: "デジダナ - digital hondana -",
-  description: "アプリで管理するデジタル本棚です",
+  title: "デジダナ - Digital Hondana -",
+  description: "WEBブラウザ上で管理するデジタル本棚です。",
 };
 
 export default function RootLayout({

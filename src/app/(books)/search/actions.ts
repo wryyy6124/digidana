@@ -62,12 +62,13 @@ export const register = async (book: gBookItem): Promise<string> => {
       if (!existingSeries) {
         await supabase.from("series").insert([
           {
-            series_id: book.volumeInfo.seriesInfo.volumeSeries[0].seriesId,
-            user_id: user?.id,
+            user_id: user?.id as string | undefined,
+            series_id: book.volumeInfo.seriesInfo.volumeSeries[0]
+              .seriesId as string,
             series_title: book.volumeInfo.title.replace(
               /(\s*[\(\（]?\d+[\)\）]?\s?)$/,
               ""
-            ),
+            ) as string,
           },
         ]);
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Button } from "@chakra-ui/react";
+import { Button, Flex } from "@chakra-ui/react";
 
 interface PaginationProps {
   totalPages: number;
@@ -12,16 +12,8 @@ const Pagination = ({
   totalPages,
   currentPage,
   handlePageChange,
-}: PaginationProps) => (
-  <Box
-    display="flex"
-    justifyContent="center"
-    flexWrap="wrap"
-    gap={2}
-    mt={8}
-    pb={8}
-    w="full"
-  >
+}: PaginationProps): JSX.Element => (
+  <Flex justifyContent="center" flexWrap="wrap" gap={4} py={10} w="full">
     {[...Array(totalPages)].map((_, i) => (
       <Button
         key={i}
@@ -33,7 +25,7 @@ const Pagination = ({
         {i + 1}
       </Button>
     ))}
-  </Box>
+  </Flex>
 );
 
 export default Pagination;

@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { supabaseServer } from "@/utils/supabase/server";
+import { AuthError } from "@supabase/supabase-js";
 
 export async function login(formData: FormData): Promise<string | null> {
   const supabase = supabaseServer();
@@ -13,7 +14,8 @@ export async function login(formData: FormData): Promise<string | null> {
     password: formData.get("password") as string,
   };
 
-  const { error } = await supabase.auth.signInWithPassword(data);
+  const { error }: { error: AuthError | null } =
+    await supabase.auth.signInWithPassword(data);
 
   if (error) {
     return "入力のメールアドレスかパスワードに誤りがあります。";
@@ -36,8 +38,8 @@ export async function signup(formData: FormData): Promise<string> {
     data: { user },
     error: signupError,
   } = await supabase.auth.signUp({
-    email: inputData.email,
-    password: inputData.password,
+    email: inputData.email as string,
+    password: inputData.password as string,
   });
 
   if (signupError) {
@@ -49,9 +51,9 @@ export async function signup(formData: FormData): Promise<string> {
 
   const { error: updateError } = await supabase.from("profiles").insert([
     {
-      user_id: user?.id,
-      nick_name: inputData.nickname,
-      created_at: new Date(),
+      user_id: user?.id as string | undefined,
+      nick_name: inputData.nickname as string,
+      created_at: new Date() as Date,
     },
   ]);
 
@@ -65,7 +67,7 @@ export async function signup(formData: FormData): Promise<string> {
 
 export async function logoff(): Promise<void> {
   const supabase = supabaseServer();
-  const { error } = await supabase.auth.signOut();
+  const { error }: { error: AuthError | null } = await supabase.auth.signOut();
 
   if (error) {
     redirect("/error");

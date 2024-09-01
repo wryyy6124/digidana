@@ -19,7 +19,7 @@ export const InputField = ({
   placeholder,
   autocomplete,
 }: InputFieldProps): JSX.Element => (
-  <Box w="100%">
+  <Box w="full">
     <FormLabel
       htmlFor={id}
       color="gray.700"
@@ -37,6 +37,7 @@ export const InputField = ({
       borderRadius="md"
       boxShadow="sm"
       color="gray.900"
+      fontSize="sm"
       p={6}
       ring="1px"
       ringColor="gray.300"
@@ -49,7 +50,6 @@ export const InputField = ({
         transform: "scale(1.05)",
         transition: "transform 0.2s",
       }}
-      fontSize="sm"
       autoComplete={autocomplete}
     />
   </Box>

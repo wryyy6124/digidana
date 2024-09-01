@@ -18,7 +18,7 @@ const NotRegistered = (): JSX.Element => {
     >
       <Text as="p">
         <BsInfoSquareFill className="inline mr-2" />
-        登録済みのデータがまだありません。
+        登録済みの書籍データがまだありません。
       </Text>
       <Text as="p">
         <Link href={`./search`} color="blue.500">

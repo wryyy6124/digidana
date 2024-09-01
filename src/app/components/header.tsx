@@ -22,9 +22,9 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
+import { Search2Icon } from "@chakra-ui/icons";
 import { MdMenuOpen } from "react-icons/md";
 import { FaHome } from "react-icons/fa";
-import { Search2Icon } from "@chakra-ui/icons";
 import { CgLogOff } from "react-icons/cg";
 import { IoNavigateCircle } from "react-icons/io5";
 
@@ -34,14 +34,14 @@ const Header = (): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [loading, setLoading] = useState<boolean>(true);
 
-  const handleLogoff = async () => {
-    setLoading(true);
-    await logoff();
-  };
-
   useEffect(() => {
     setLoading(false);
   }, []);
+
+  const handleLogoff = async (): Promise<void> => {
+    setLoading(true);
+    await logoff();
+  };
 
   if (loading) return <Loading />;
 
@@ -50,7 +50,8 @@ const Header = (): JSX.Element => {
       as="header"
       id={`header`}
       bg="white"
-      position="fixed"
+      boxShadow="sm"
+      pos="fixed"
       top={0}
       left={0}
       zIndex={10}
@@ -61,7 +62,7 @@ const Header = (): JSX.Element => {
         alignItems="center"
         justifyContent="space-between"
         mx="auto"
-        p={3}
+        p={2}
         w="full"
         maxW="1280px"
       >
@@ -72,7 +73,18 @@ const Header = (): JSX.Element => {
             md: "12%",
           }}
         >
-          <AppLogo />
+          {!(pathName === "/") ? (
+            <Link
+              href={`/`}
+              onClick={() => {
+                setLoading(true);
+              }}
+            >
+              <AppLogo />
+            </Link>
+          ) : (
+            <AppLogo />
+          )}
         </Flex>
         <Button onClick={onOpen}>
           <MdMenuOpen />
@@ -89,12 +101,12 @@ const Header = (): JSX.Element => {
             </Flex>
           </ModalHeader>
           <ModalCloseButton id={`modal__close`} />
-          <ModalBody id={`modal__body`} p={8}>
-            <Flex as="ul" flexDirection="column" gap={8} fontSize="xl">
+          <ModalBody id={`modal__body`} px={8} pb={8} pt={4}>
+            <Flex as="ul" flexDirection="column" gap={4} fontSize="xl">
               {!(pathName === "/") ? (
                 <Box as="li" w="full">
                   <Link
-                    href="/"
+                    href={`/`}
                     onClick={() => {
                       setLoading(true);
                     }}
@@ -131,10 +143,10 @@ const Header = (): JSX.Element => {
                   handleLogoff();
                 }}
               >
-                <Box display="flex" alignItems="center" gap={2}>
+                <Flex alignItems="center" gap={2}>
                   <CgLogOff />
                   ログオフ
-                </Box>
+                </Flex>
               </Box>
             </Flex>
           </ModalBody>

@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* html {
-  scrollbar-gutter: stable;
-} */
-
 html:has(dialog:modal) {
   overflow: hidden;
 }

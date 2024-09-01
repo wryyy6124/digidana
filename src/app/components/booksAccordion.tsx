@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { supabaseClient } from "@/utils/supabase/client";
@@ -18,7 +18,7 @@ import {
   Link,
   Flex,
   Button,
-  Heading,
+  Text,
 } from "@chakra-ui/react";
 
 import { BiMessageAltDetail } from "react-icons/bi";
@@ -31,11 +31,19 @@ interface booksAccordionProps {
 
 const BooksAccordion = ({ receiveBooks }: booksAccordionProps): JSX.Element => {
   const router = useRouter();
-  const supabase = supabaseClient();
+
+  useEffect(() => {
+    router.refresh;
+  }, []);
 
   const [booksData, setBooksData] = useState(receiveBooks);
 
-  const handleDelete = async (seriesId: string, volumeId: string) => {
+  const supabase = supabaseClient();
+
+  const handleDelete = async (
+    seriesId: string,
+    volumeId: string
+  ): Promise<void> => {
     const reply = confirm("削除しますか？この操作は取り消せません");
     if (!reply) return;
 
@@ -56,23 +64,24 @@ const BooksAccordion = ({ receiveBooks }: booksAccordionProps): JSX.Element => {
         (book) => book.volume_id !== volumeId
       );
 
-      if (!(seriesId === "null") && updatedBooks[seriesId].length === 0) {
+      if (updatedBooks[seriesId].length === 0) {
         console.log("seriesId 0 items");
-
         delete updatedBooks[seriesId];
 
-        try {
-          const { error: seriesError } = await supabase
-            .from("series")
-            .delete()
-            .eq("series_id", seriesId);
+        if (!(seriesId === "null")) {
+          try {
+            const { error: seriesError } = await supabase
+              .from("series")
+              .delete()
+              .eq("series_id", seriesId);
 
-          if (seriesError) {
+            if (seriesError) {
+              console.error("Error deleting series:", seriesError);
+              return;
+            }
+          } catch (seriesError) {
             console.error("Error deleting series:", seriesError);
-            return;
           }
-        } catch (seriesError) {
-          console.error("Error deleting series:", seriesError);
         }
       }
 
@@ -111,7 +120,7 @@ const BooksAccordion = ({ receiveBooks }: booksAccordionProps): JSX.Element => {
               _hover={{ bg: "gray.50" }}
               _expanded={{ bg: "gray.50" }}
             >
-              <Heading
+              <Text
                 as="h3"
                 flex="1"
                 fontSize="xl"
@@ -129,7 +138,7 @@ const BooksAccordion = ({ receiveBooks }: booksAccordionProps): JSX.Element => {
                       .substring(0, 30)} 【 ${
                       booksData[series_id].length
                     }冊 】`}
-              </Heading>
+              </Text>
               <AccordionIcon />
             </AccordionButton>
             <AccordionPanel p={0} w="full">
@@ -158,45 +167,55 @@ const BooksAccordion = ({ receiveBooks }: booksAccordionProps): JSX.Element => {
                       borderWidth={1}
                       borderRadius="md"
                       boxShadow="sm"
-                      p={{
-                        base: 4,
-                        md: 6,
-                      }}
+                      p={6}
                       pt={{
                         base: 2,
                         md: 4,
                       }}
                       w="full"
                     >
-                      <Heading
-                        as="h4"
-                        fontWeight="bold"
-                        display="flex"
-                        alignItems="center"
-                        mb={3}
-                        minH="2.4em"
-                      >
-                        {series_id !== "null" ? (
-                          <Box as="span" fontSize="2xl">
-                            {book.order_number}巻
-                          </Box>
-                        ) : (
-                          <Box as="span" fontSize="md">
-                            {book.title.length <= 20
-                              ? book.title
-                              : book.title.substring(0, 20) + "..."}
-                          </Box>
-                        )}
-                      </Heading>
+                      <Flex alignItems="center" mb={4}>
+                        <Text as="h4" fontWeight="bold">
+                          {series_id !== "null" ? (
+                            <Flex
+                              as="span"
+                              fontSize="3xl"
+                              alignItems="baseline"
+                              gap={1}
+                            >
+                              {book.order_number}
+                              <Box as="span" fontSize="60%">
+                                巻
+                              </Box>
+                            </Flex>
+                          ) : (
+                            <Flex
+                              as="span"
+                              fontSize="xl"
+                              alignItems="center"
+                              minH="2.4em"
+                            >
+                              {book.title.length <= 20
+                                ? book.title
+                                : book.title.substring(0, 20) + "..."}
+                            </Flex>
+                          )}
+                        </Text>
+                      </Flex>
                       <Flex
                         bg="linear-gradient(135deg, #f7fafc 25%, #fdfdfd 25%, #fdfdfd 50%, #f7fafc 50%, #f7fafc 75%, #fdfdfd 75%, #fdfdfd 100%)"
                         backgroundSize="150px 150px"
+                        backgroundPosition="center"
                         alignItems="center"
                         justifyContent="center"
+                        mx="auto"
                         mb={6}
                         p={6}
                         pb={8}
-                        w="full"
+                        w={{
+                          base: "90%",
+                          md: "full",
+                        }}
                         h="200px"
                       >
                         <Flex
@@ -218,7 +237,7 @@ const BooksAccordion = ({ receiveBooks }: booksAccordionProps): JSX.Element => {
                           ) : (
                             <Image
                               src="/not_image.jpg"
-                              alt="notimage"
+                              alt={`notimage`}
                               objectFit="cover"
                               opacity="0.2"
                               w="full"
@@ -227,30 +246,31 @@ const BooksAccordion = ({ receiveBooks }: booksAccordionProps): JSX.Element => {
                           )}
                         </Flex>
                       </Flex>
-                      <Flex justifyContent="center" gap={6}>
+                      <Flex justifyContent="center" gap={10}>
                         <Button
-                          backgroundColor="blue.400"
-                          color="white"
+                          backgroundColor="blue.600"
                           display="flex"
-                          position="relative"
+                          pos="relative"
                           overflow="hidden"
                           px="0"
                           maxW="100%"
                           w="fit-content"
                           h="auto"
                           _before={{
-                            backgroundColor: "blue.700",
+                            backgroundColor: "blue.400",
                             content: `""`,
                             display: "inline-block",
                             transition: "0.5s",
-                            position: "absolute",
+                            pos: "absolute",
                             top: "0",
                             right: "100%",
                             w: "full",
                             h: "100%",
                           }}
                           _hover={{
-                            _before: { right: "0" },
+                            _before: {
+                              right: "0",
+                            },
                           }}
                         >
                           <Link
@@ -275,21 +295,21 @@ const BooksAccordion = ({ receiveBooks }: booksAccordionProps): JSX.Element => {
                           </Link>
                         </Button>
                         <Button
-                          backgroundColor="red.400"
+                          backgroundColor="red.700"
                           color="white"
                           display="flex"
-                          position="relative"
+                          pos="relative"
                           overflow="hidden"
                           px="0"
                           maxW="100%"
                           w="fit-content"
                           h="auto"
                           _before={{
-                            backgroundColor: "red.700",
+                            backgroundColor: "red.500",
                             content: `""`,
                             display: "inline-block",
                             transition: "0.5s",
-                            position: "absolute",
+                            pos: "absolute",
                             top: "0",
                             right: "100%",
                             w: "full",

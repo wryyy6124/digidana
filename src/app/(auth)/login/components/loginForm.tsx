@@ -8,7 +8,7 @@ import { InputField } from "./inputField";
 
 export const LoginForm = (): JSX.Element => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -24,29 +24,29 @@ export const LoginForm = (): JSX.Element => {
 
   return (
     <>
-      <VStack id={`login__inner`} w="100%" maxWidth="xl">
+      <VStack id={`login__inner`} w="full" maxWidth="xl">
         <Box as="form" onSubmit={handleLogin} id={`login__form`} w="full">
           <VStack id={`login__form__wrapper`} mx="auto" w="full" spacing={12}>
             <VStack
               id={`login__form__input`}
+              alignItems="flex-start"
+              spacing={4}
               mx="auto"
               w="full"
-              spacing={4}
-              alignItems="flex-start"
             >
               <InputField
-                id="login__form__email"
+                type="email"
+                id={`login__form__email`}
                 label="メールアドレス"
                 name="email"
-                type="email"
                 placeholder="メールアドレスを入力してください"
                 autocomplete="username"
               />
               <InputField
-                id="login__form__password"
+                type="password"
+                id={`login__form__password`}
                 label="パスワード"
                 name="password"
-                type="password"
                 placeholder="パスワードを入力してください"
                 autocomplete="current-password"
               />
@@ -61,7 +61,7 @@ export const LoginForm = (): JSX.Element => {
                 fontWeight="bold"
                 transition="transform 0.15s ease-in-out"
                 p={8}
-                width="100%"
+                w="full"
                 _hover={{
                   bg: "indigo.700",
                   transform: "scale(1.05)",

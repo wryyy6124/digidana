@@ -25,37 +25,36 @@ export const SignupForm = (): JSX.Element => {
 
   return (
     <>
-      <VStack id={`signup__inner`} w="100%">
-        <Box as="form" onSubmit={handleSignup} id={`signup__form`} w="full">
+      <VStack id={`signup__inner`} w="full">
+        <Box as="form" id={`signup__form`} onSubmit={handleSignup} w="full">
           <VStack id={`signup__form__wrapper`} mx="auto" w="full" spacing={12}>
             <VStack
               id={`login__form__input`}
-              mx="auto"
-              w="full"
               spacing={4}
               alignItems="flex-start"
+              mx="auto"
+              w="full"
             >
               <InputField
-                id="signup__form_nickname"
+                type="text"
+                id={`signup__form_nickname`}
                 label="ニックネーム"
                 name="nickname"
-                type="text"
                 placeholder="ニックネームを入力してください"
-                autocomplete="username"
               />
               <InputField
-                id="signup__form__email"
+                type="email"
+                id={`signup__form__email`}
                 label="メールアドレス"
                 name="email"
-                type="email"
                 placeholder="メールアドレスを入力してください"
                 autocomplete="username"
               />
               <InputField
-                id="signup__form__password"
+                type="password"
+                id={`signup__form__password`}
                 label="パスワード"
                 name="password"
-                type="password"
                 placeholder="パスワードを入力してください"
                 autocomplete="new-password"
               />
@@ -70,7 +69,7 @@ export const SignupForm = (): JSX.Element => {
                 fontWeight="bold"
                 transition="transform 0.15s ease-in-out"
                 p={8}
-                width="100%"
+                w="full"
                 _hover={{
                   bg: "green.500",
                   transform: "scale(1.05)",

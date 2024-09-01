@@ -7,10 +7,10 @@ const Loading = (): JSX.Element => {
   return (
     <Flex
       id={`loading`}
-      bg="rgb(10, 10, 10, 0.96)"
+      bg="rgb(10, 10, 10, 0.95)"
       justifyContent="center"
       alignItems="center"
-      position="fixed"
+      pos="fixed"
       top={0}
       left={0}
       zIndex="5"

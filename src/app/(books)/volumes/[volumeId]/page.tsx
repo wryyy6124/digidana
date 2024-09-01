@@ -11,7 +11,7 @@ const Volumes = async ({
   params: { volumeId: string };
 }): Promise<JSX.Element> => {
   const supabase = supabaseServer();
-  const { volumeId } = params;
+  const { volumeId }: { volumeId: string } = params;
 
   const {
     data: { user },

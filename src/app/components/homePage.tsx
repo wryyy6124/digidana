@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 
 import Header from "./header";
 import Footer from "./footer";
@@ -25,6 +25,8 @@ const HomePage = ({ books }: booksProps): JSX.Element => {
   const [nickName, setNickName] = useState<string | null>("");
 
   useEffect(() => {
+    router.refresh();
+
     const fetchNickName = async () => {
       try {
         const { data, error: dbError } = await supabase
@@ -32,14 +34,18 @@ const HomePage = ({ books }: booksProps): JSX.Element => {
           .select("*")
           .single();
 
+        if (dbError) {
+          console.error(dbError);
+          return;
+        }
+
         setNickName(data.nick_name);
       } catch (dbError) {
         console.error(dbError);
       }
     };
-    fetchNickName();
 
-    router.refresh();
+    fetchNickName();
   }, []);
 
   const groupBooksBySeries = (books: booksType[]) => {
@@ -57,7 +63,7 @@ const HomePage = ({ books }: booksProps): JSX.Element => {
   return (
     <>
       <Header />
-      <Box as="main" id={`home`} w="full" pt={100}>
+      <Box as="main" id={`home`} w="full" py={100}>
         <Box
           id={`home__inner`}
           mx="auto"
@@ -73,16 +79,18 @@ const HomePage = ({ books }: booksProps): JSX.Element => {
           maxW="1280px"
         >
           {nickName ? <Text>こんにちは、{nickName}さん</Text> : null}
-          <Heading
+          <Text
             as="h2"
             id={`home__header`}
+            display="flex"
+            alignItems="center"
             fontSize="3xl"
             fontWeight="bold"
             mb={10}
           >
-            <GiBookshelf className="inline mr-2" />
+            <GiBookshelf className={`inline mr-2`} />
             マイライブラリ
-          </Heading>
+          </Text>
 
           {!(Object.keys(books).length === 0) ? (
             <BooksAccordion receiveBooks={receiveBooks} />
