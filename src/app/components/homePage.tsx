@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 
 import Header from "./header";
 import Footer from "./footer";
@@ -12,41 +12,16 @@ import BooksAccordion from "./booksAccordion";
 
 import { GiBookshelf } from "react-icons/gi";
 
-import { supabaseClient } from "@/utils/supabase/client";
-
-interface booksProps {
+interface Props {
   books: booksType[];
 }
 
-const HomePage = ({ books }: booksProps): JSX.Element => {
+const HomePage = ({ books }: Props): JSX.Element => {
   const router = useRouter();
-  const supabase = supabaseClient();
-
-  const [nickName, setNickName] = useState<string | null>("");
 
   useEffect(() => {
     router.refresh();
-
-    const fetchNickName = async () => {
-      try {
-        const { data, error: dbError } = await supabase
-          .from("profiles")
-          .select("*")
-          .single();
-
-        if (dbError) {
-          console.error(dbError);
-          return;
-        }
-
-        setNickName(data.nick_name);
-      } catch (dbError) {
-        console.error(dbError);
-      }
-    };
-
-    fetchNickName();
-  }, []);
+  }, [router]);
 
   const groupBooksBySeries = (books: booksType[]) => {
     return books.reduce((acc, book) => {
@@ -63,7 +38,16 @@ const HomePage = ({ books }: booksProps): JSX.Element => {
   return (
     <>
       <Header />
-      <Box as="main" id={`home`} w="full" py={100}>
+      <Box
+        as="main"
+        id={`home`}
+        bg="linear-gradient(90deg, #f7fafc 25%, #fdfdfd 25%, #fdfdfd 50%, #f7fafc 50%, #f7fafc 75%, #fdfdfd 75%, #fdfdfd 100%)"
+        backgroundSize="1000px 1000px"
+        backgroundPosition="center"
+        w="full"
+        minH="100%"
+        py={100}
+      >
         <Box
           id={`home__inner`}
           mx="auto"
@@ -78,19 +62,19 @@ const HomePage = ({ books }: booksProps): JSX.Element => {
           w="full"
           maxW="1280px"
         >
-          {nickName ? <Text>こんにちは、{nickName}さん</Text> : null}
-          <Text
-            as="h2"
-            id={`home__header`}
-            display="flex"
-            alignItems="center"
-            fontSize="3xl"
-            fontWeight="bold"
-            mb={10}
-          >
-            <GiBookshelf className={`inline mr-2`} />
-            マイライブラリ
-          </Text>
+          <Flex justifyContent="space-between" mb={10}>
+            <Text
+              as="h2"
+              id={`home__header`}
+              display="inline-flex"
+              alignItems="center"
+              fontSize="3xl"
+              fontWeight="bold"
+            >
+              <GiBookshelf className={`inline mr-2`} />
+              マイライブラリ
+            </Text>
+          </Flex>
 
           {!(Object.keys(books).length === 0) ? (
             <BooksAccordion receiveBooks={receiveBooks} />

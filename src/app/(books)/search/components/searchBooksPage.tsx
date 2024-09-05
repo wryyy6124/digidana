@@ -17,6 +17,7 @@ import {
   InputRightElement,
   UnorderedList,
   ListItem,
+  Link,
 } from "@chakra-ui/react";
 
 import { Search2Icon } from "@chakra-ui/icons";
@@ -156,7 +157,16 @@ const SearchBooksPage = (): JSX.Element => {
   return (
     <>
       <Header />
-      <Box as="main" id={`seriesRegistration`} w="full" py={100}>
+      <Box
+        as="main"
+        id={`seriesRegistration`}
+        bg="linear-gradient(90deg, #f7fafc 25%, #fdfdfd 25%, #fdfdfd 50%, #f7fafc 50%, #f7fafc 75%, #fdfdfd 75%, #fdfdfd 100%)"
+        backgroundSize="1000px 1000px"
+        backgroundPosition="center"
+        w="full"
+        minH="100%"
+        py={100}
+      >
         <Box
           id={`seriesRegistration`}
           mx="auto"
@@ -168,12 +178,12 @@ const SearchBooksPage = (): JSX.Element => {
           <Text
             as="h2"
             id={`volumesIdPage__header`}
-            display="flex"
-            alignItems="center"
             gap={2}
-            fontSize="2xl"
+            display="inline-flex"
+            alignItems="center"
+            fontSize="3xl"
             fontWeight="bold"
-            mb={4}
+            mb={10}
           >
             <AiOutlineFileSearch className="mt-2" />
             書籍検索
@@ -188,6 +198,7 @@ const SearchBooksPage = (): JSX.Element => {
               }
               placeholder="検索したい書籍名を入力してください。"
               _placeholder={{ color: "gray.500" }}
+              bg="white"
               borderRadius="lg"
               boxShadow="sm"
               flex="1"
@@ -333,6 +344,7 @@ const SearchBooksPage = (): JSX.Element => {
                             <Image
                               src={book.volumeInfo.imageLinks.thumbnail}
                               alt={book.volumeInfo.title}
+                              borderRadius="lg"
                               w="full"
                               h="auto"
                             />
@@ -447,7 +459,38 @@ const SearchBooksPage = (): JSX.Element => {
               )}
             </Box>
           ) : (
-            <Text>ここに検索方法書いてくよ</Text>
+            <Text
+              bg="white"
+              boxShadow="md"
+              borderWidth={1}
+              borderColor="gray.300"
+              borderRadius="md"
+              fontSize="md"
+              p={6}
+            >
+              <Link
+                href={`https://developers.google.com/books?hl=ja`}
+                color="blue.400"
+                fontWeight="bold"
+                transition="0.4s"
+                _hover={{
+                  color: "red.400",
+                }}
+              >
+                Google Books API
+              </Link>
+              （以下、API）を活用して、書籍情報を検索し自分だけのデジタル本棚を作成できます。
+              <br />
+              まず、検索バーへ書籍のタイトルを入力してください。（APIの性質上、必ずヒットするとは限りません）
+              <br />
+              その後、検索ボタンを押すとAPIから取得した検索結果が表示（最大40件）されます。
+              <br />
+              一覧から追加したい対象書籍の登録ボタンを押下してください。
+              <br />
+              すると、トップページのマイライブラリの一覧へ追加されます！
+              <br />
+              ※APIは1日あたりのリクエスト数に限りがあります。リクエストの乱用はご遠慮ください😞
+            </Text>
           )}
         </Box>
       </Box>

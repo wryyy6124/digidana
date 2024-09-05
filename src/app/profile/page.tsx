@@ -2,10 +2,9 @@
 
 import { supabaseServer } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import ProfilePage from "./component/profilePage";
 
-import SeriesIdPage from "./component/seriesIdPage";
-
-const Series = async (): Promise<JSX.Element> => {
+const Profile = async (): Promise<JSX.Element> => {
   const supabase = supabaseServer();
 
   const {
@@ -17,7 +16,9 @@ const Series = async (): Promise<JSX.Element> => {
     redirect("/login");
   }
 
-  return <SeriesIdPage />;
+  console.log(user.email);
+
+  return <ProfilePage />;
 };
 
-export default Series;
+export default Profile;

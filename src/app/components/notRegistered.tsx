@@ -8,10 +8,12 @@ import { BsInfoSquareFill } from "react-icons/bs";
 const NotRegistered = (): JSX.Element => {
   return (
     <Flex
-      border="1px"
-      borderRadius={10}
       flexFlow="column"
       gap={5}
+      border="2px solid #888"
+      borderRadius={10}
+      bg="white"
+      color="black"
       fontSize="2xl"
       fontWeight="bold"
       p={6}

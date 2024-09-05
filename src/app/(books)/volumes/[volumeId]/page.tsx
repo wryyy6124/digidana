@@ -36,7 +36,22 @@ const Volumes = async ({
   }
   console.log(`volumeId Match!!`);
 
-  return <VolumesIdPage volume={volume} />;
+  // 自身のシリーズIDを取得
+  const seriesId = volume.series_id;
+
+  const { data: series, error: seriesError } = await supabase
+    .from("volumes")
+    .select("order_number, thumbnail_url, volume_id")
+    .eq("series_id", seriesId);
+
+  if (seriesError || series.length === 0) {
+    console.log(`series_data is Nothing`);
+
+    return <VolumesIdPage volume={volume} />;
+  }
+  console.log(`series_data found!!: total ${series.length}`);
+
+  return <VolumesIdPage volume={volume} series={series} />;
 };
 
 export default Volumes;

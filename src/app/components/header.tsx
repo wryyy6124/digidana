@@ -13,6 +13,7 @@ import {
   Box,
   Button,
   Flex,
+  Text,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -24,15 +25,37 @@ import {
 
 import { Search2Icon } from "@chakra-ui/icons";
 import { MdMenuOpen } from "react-icons/md";
-import { FaHome } from "react-icons/fa";
+import { FaEdit, FaHome } from "react-icons/fa";
 import { CgLogOff } from "react-icons/cg";
-import { IoNavigateCircle } from "react-icons/io5";
+import { FaCircleUser } from "react-icons/fa6";
+
+import { supabaseClient } from "@/utils/supabase/client";
 
 const Header = (): JSX.Element => {
-  const pathName = usePathname();
-
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const pathName = usePathname();
+  const supabase = supabaseClient();
+
   const [loading, setLoading] = useState<boolean>(true);
+  const [userName, setUserName] = useState<string>("");
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      const { data: profile, error: profileError } = await supabase
+        .from("profiles")
+        .select("*")
+        .single();
+
+      if (profileError) {
+        console.error("Error profile data:", profileError);
+        return;
+      }
+
+      setUserName(profile.nick_name);
+    };
+
+    fetchProfile();
+  }, [supabase]);
 
   useEffect(() => {
     setLoading(false);
@@ -46,65 +69,74 @@ const Header = (): JSX.Element => {
   if (loading) return <Loading />;
 
   return (
-    <Box
-      as="header"
-      id={`header`}
-      bg="white"
-      boxShadow="sm"
-      pos="fixed"
-      top={0}
-      left={0}
-      zIndex={10}
-      w="full"
-    >
-      <Flex
-        id={`header__inner`}
-        alignItems="center"
-        justifyContent="space-between"
-        mx="auto"
-        p={2}
+    <>
+      <Box
+        as="header"
+        id={`header`}
+        bg="white"
+        boxShadow="sm"
+        pos="fixed"
+        top={0}
+        left={0}
+        zIndex={10}
         w="full"
-        maxW="1280px"
       >
         <Flex
-          justifyContent="center"
-          w={{
-            base: "24%",
-            md: "12%",
-          }}
+          id={`header__inner`}
+          alignItems="center"
+          justifyContent="space-between"
+          mx="auto"
+          p={2}
+          w="full"
+          maxW="1280px"
         >
-          {!(pathName === "/") ? (
-            <Link
-              href={`/`}
-              onClick={() => {
-                setLoading(true);
-              }}
-            >
+          <Flex
+            justifyContent="center"
+            w={{
+              base: "24%",
+              md: "12%",
+            }}
+          >
+            {!(pathName === "/") ? (
+              <Link
+                href={`/`}
+                onClick={() => {
+                  setLoading(true);
+                }}
+              >
+                <AppLogo />
+              </Link>
+            ) : (
               <AppLogo />
-            </Link>
-          ) : (
-            <AppLogo />
-          )}
+            )}
+          </Flex>
+          <Button onClick={onOpen}>
+            <MdMenuOpen />
+          </Button>
         </Flex>
-        <Button onClick={onOpen}>
-          <MdMenuOpen />
-        </Button>
-      </Flex>
+      </Box>
 
       <Modal id={`modal`} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay id={`modal__overlay`} />
         <ModalContent id={`modal__contents`}>
-          <ModalHeader id={`modal__header`} fontSize="2xl">
-            <Flex alignItems="center" gap={2}>
-              <IoNavigateCircle />
-              ページナビゲーション
+          <ModalHeader id={`modal__header`}>
+            <Flex alignItems="center" gap={2} fontSize="md">
+              ユーザー名：
+              <Text fontSize="2xl">{userName}</Text>
             </Flex>
           </ModalHeader>
           <ModalCloseButton id={`modal__close`} />
           <ModalBody id={`modal__body`} px={8} pb={8} pt={4}>
-            <Flex as="ul" flexDirection="column" gap={4} fontSize="xl">
+            <Flex as="ul" fontSize="xl" flexDirection="column" gap={8}>
               {!(pathName === "/") ? (
-                <Box as="li" w="full">
+                <Box
+                  as="li"
+                  transition="0.4s"
+                  _hover={{
+                    color: "red.400",
+                  }}
+                  w="full"
+                >
                   <Link
                     href={`/`}
                     onClick={() => {
@@ -118,8 +150,37 @@ const Header = (): JSX.Element => {
                   </Link>
                 </Box>
               ) : null}
+              {!(pathName === "/profile") ? (
+                <Box
+                  as="li"
+                  transition="0.4s"
+                  _hover={{
+                    color: "red.400",
+                  }}
+                  w="full"
+                >
+                  <Link
+                    href={`/profile`}
+                    onClick={() => {
+                      setLoading(true);
+                    }}
+                  >
+                    <Flex alignItems="center" gap={2}>
+                      <FaCircleUser />
+                      ユーザ情報
+                    </Flex>
+                  </Link>
+                </Box>
+              ) : null}
               {!(pathName === "/search") ? (
-                <Box as="li" w="full">
+                <Box
+                  as="li"
+                  transition="0.4s"
+                  _hover={{
+                    color: "red.400",
+                  }}
+                  w="full"
+                >
                   <Link
                     href={`/search`}
                     onClick={() => {
@@ -133,9 +194,34 @@ const Header = (): JSX.Element => {
                   </Link>
                 </Box>
               ) : null}
+              {!(pathName === "/series") ? (
+                <Box
+                  as="li"
+                  transition="0.4s"
+                  _hover={{
+                    color: "red.400",
+                  }}
+                  w="full"
+                >
+                  <Link
+                    href={`/series`}
+                    onClick={() => {
+                      setLoading(true);
+                    }}
+                  >
+                    <Flex alignItems="center" gap={2}>
+                      <FaEdit />
+                      シリーズ名編集
+                    </Flex>
+                  </Link>
+                </Box>
+              ) : null}
               <Box
                 as="li"
+                color="red.400"
                 cursor="pointer"
+                fontWeight="bold"
+                transition="0.4s"
                 w="full"
                 onClick={() => {
                   onClose();
@@ -152,7 +238,7 @@ const Header = (): JSX.Element => {
           </ModalBody>
         </ModalContent>
       </Modal>
-    </Box>
+    </>
   );
 };
 

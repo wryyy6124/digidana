@@ -6,13 +6,13 @@ import { Box, Text } from "@chakra-ui/react";
 import Header from "@/app/components/header";
 import Footer from "@/app/components/footer";
 
-const SeriesIdPage = (): JSX.Element => {
+const ProfilePage = (): JSX.Element => {
   return (
     <>
       <Header />
-      <Box as="main" id={`SeriesIdPage`} w="full" py={100}>
+      <Box as="main" id={`profilePage`} w="full" py={100}>
         <Box
-          id={`SeriesIdPage__inner`}
+          id={`profilePage__inner`}
           mx="auto"
           p={8}
           pb={32}
@@ -21,10 +21,14 @@ const SeriesIdPage = (): JSX.Element => {
         >
           <Text
             as="h2"
-            id={`SeriesIdPage__header`}
-            className={`font-bold text-2xl mb-4`}
+            id={`profilePage__header`}
+            display="inline-flex"
+            alignItems="center"
+            fontSize="3xl"
+            fontWeight="bold"
+            mb={10}
           >
-            漫画シリーズタイトルの詳細ページ
+            ユーザー情報ページ
           </Text>
         </Box>
       </Box>
@@ -33,4 +37,4 @@ const SeriesIdPage = (): JSX.Element => {
   );
 };
 
-export default SeriesIdPage;
+export default ProfilePage;

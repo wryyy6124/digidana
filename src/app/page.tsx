@@ -7,23 +7,24 @@ const HomeServer = async (): Promise<JSX.Element> => {
   const supabase = supabaseServer();
 
   const {
-    data: { session },
-  } = await supabase.auth.getSession();
+    data: { user },
+  } = await supabase.auth.getUser();
 
   try {
-    if (session) {
-      const { data, error } = await supabase.from("volumes").select();
+    if (user) {
+      const { data: books, error } = await supabase.from("volumes").select();
 
       if (error) {
-        console.error("Error fetching books:", error);
+        console.error("Error fetching data:", error);
       }
 
-      return <HomePage books={data || []} />;
+      return <HomePage books={books || []} />;
     } else {
       return <HomePage books={[]} />;
     }
   } catch (error) {
     console.error("Error:", error);
+
     return <HomePage books={[]} />;
   }
 };

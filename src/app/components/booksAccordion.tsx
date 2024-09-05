@@ -34,7 +34,7 @@ const BooksAccordion = ({ receiveBooks }: booksAccordionProps): JSX.Element => {
 
   useEffect(() => {
     router.refresh;
-  }, []);
+  }, [router]);
 
   const [booksData, setBooksData] = useState(receiveBooks);
 
@@ -94,7 +94,7 @@ const BooksAccordion = ({ receiveBooks }: booksAccordionProps): JSX.Element => {
   };
 
   return (
-    <Accordion id={`accordion`} allowMultiple w="full">
+    <Accordion id={`accordion`} allowMultiple bg="white" w="full">
       {Object.keys(booksData)
         .sort((a, b) => {
           const titleA =
@@ -117,8 +117,8 @@ const BooksAccordion = ({ receiveBooks }: booksAccordionProps): JSX.Element => {
             <AccordionButton
               p={0}
               pr="1em"
-              _hover={{ bg: "gray.50" }}
-              _expanded={{ bg: "gray.50" }}
+              _hover={{ bg: "blue.50" }}
+              _expanded={{ bg: "blue.50" }}
             >
               <Text
                 as="h3"
@@ -144,12 +144,17 @@ const BooksAccordion = ({ receiveBooks }: booksAccordionProps): JSX.Element => {
             <AccordionPanel p={0} w="full">
               <Grid
                 as="ul"
+                border={1}
                 templateColumns={{
                   base: "repeat(1, 1fr)",
                   md: "repeat(2, 1fr)",
                   xl: "repeat(3, 1fr)",
                 }}
                 gap={{
+                  base: 4,
+                  md: 6,
+                }}
+                px={{
                   base: 4,
                   md: 6,
                 }}
