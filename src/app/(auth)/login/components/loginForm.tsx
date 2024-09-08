@@ -20,9 +20,12 @@ export const LoginForm = (): JSX.Element => {
     setErrorMessage(null);
 
     const formData: FormData = new FormData(e.currentTarget);
-    const error: string | null = await login(formData);
+    const err: string | null = await login(formData);
 
-    error ? alert(error) : "";
+    if (err) {
+      alert(err);
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {

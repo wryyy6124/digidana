@@ -21,7 +21,10 @@ export const SignupForm = (): JSX.Element => {
     const formData: FormData = new FormData(e.currentTarget);
     const err: string | null = await signup(formData);
 
-    err ? alert(err) : "";
+    if (err) {
+      alert(err);
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
