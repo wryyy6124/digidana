@@ -12,20 +12,30 @@ const HomeServer = async (): Promise<JSX.Element> => {
 
   try {
     if (user) {
-      const { data: books, error } = await supabase.from("volumes").select();
+      const { data: books, error: booksError } = await supabase
+        .from("volumes")
+        .select();
 
-      if (error) {
-        console.error("Error fetching data:", error);
+      if (booksError) {
+        console.error("Error fetching books data:", booksError);
       }
 
-      return <HomePage books={books || []} />;
+      const { data: series, error: seriesError } = await supabase
+        .from("series")
+        .select();
+
+      if (seriesError) {
+        console.error("Error fetching series data:", seriesError);
+      }
+
+      return <HomePage books={books || []} series={series || []} />;
     } else {
-      return <HomePage books={[]} />;
+      return <HomePage books={[]} series={[]} />;
     }
   } catch (error) {
     console.error("Error:", error);
 
-    return <HomePage books={[]} />;
+    return <HomePage books={[]} series={[]} />;
   }
 };
 

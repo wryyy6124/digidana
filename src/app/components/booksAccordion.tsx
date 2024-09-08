@@ -1,8 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-
+import { useState } from "react";
 import { supabaseClient } from "@/utils/supabase/client";
 
 import {
@@ -25,19 +23,24 @@ import { BiMessageAltDetail } from "react-icons/bi";
 import { GiOpenBook } from "react-icons/gi";
 import { MdDeleteForever } from "react-icons/md";
 
-interface booksAccordionProps {
-  receiveBooks: Record<string, booksType[]>;
+interface seriesData {
+  created_at: string;
+  user_id: string;
+  series_id: string;
+  series_title: string;
+  id: string;
 }
 
-const BooksAccordion = ({ receiveBooks }: booksAccordionProps): JSX.Element => {
-  const router = useRouter();
+interface booksAccordionProps {
+  receiveBooks: Record<string, booksType[]>;
+  series: seriesData[];
+}
 
-  useEffect(() => {
-    router.refresh;
-  }, [router]);
-
+const BooksAccordion = ({
+  receiveBooks,
+  series,
+}: booksAccordionProps): JSX.Element => {
   const [booksData, setBooksData] = useState(receiveBooks);
-
   const supabase = supabaseClient();
 
   const handleDelete = async (
@@ -89,8 +92,6 @@ const BooksAccordion = ({ receiveBooks }: booksAccordionProps): JSX.Element => {
     } catch (error) {
       console.error("Error deleting volumes:", error);
     }
-
-    router.refresh();
   };
 
   return (
@@ -133,11 +134,13 @@ const BooksAccordion = ({ receiveBooks }: booksAccordionProps): JSX.Element => {
                 <GiOpenBook className="inline mr-2" />
                 {series_id === "null"
                   ? `その他書籍【 ${booksData[series_id].length}冊 】`
-                  : `${booksData[series_id][0].title
-                      .replace(/(\s*[\(\（]?\d+[\)\）]?\s*巻?)$/, "")
-                      .substring(0, 30)} 【 ${
-                      booksData[series_id].length
-                    }冊 】`}
+                  : `${
+                      series.find((s) => s.series_id === series_id)
+                        ?.series_title ||
+                      booksData[series_id][0].title
+                        .replace(/(\s*[\(\（]?\d+[\)\）]?\s*巻?)$/, "")
+                        .substring(0, 30)
+                    } 【 ${booksData[series_id].length}冊 】`}
               </Text>
               <AccordionIcon />
             </AccordionButton>

@@ -12,16 +12,26 @@ import BooksAccordion from "./booksAccordion";
 
 import { GiBookshelf } from "react-icons/gi";
 
-interface Props {
+interface seriesType {
+  created_at: string;
+  user_id: string;
+  series_id: string;
+  series_title: string;
+  id: string;
+}
+[];
+
+interface HomePageProps {
   books: booksType[];
+  series: seriesType[];
 }
 
-const HomePage = ({ books }: Props): JSX.Element => {
+const HomePage = ({ books, series }: HomePageProps): JSX.Element => {
   const router = useRouter();
 
   useEffect(() => {
     router.refresh();
-  }, [router]);
+  }, [router, books, series]);
 
   const groupBooksBySeries = (books: booksType[]) => {
     return books.reduce((acc, book) => {
@@ -46,18 +56,14 @@ const HomePage = ({ books }: Props): JSX.Element => {
         backgroundPosition="center"
         w="full"
         minH="100%"
-        py={100}
+        py={120}
       >
         <Box
           id={`home__inner`}
           mx="auto"
-          p={{
+          px={{
             base: 4,
             md: 8,
-          }}
-          pb={{
-            base: 20,
-            md: 32,
           }}
           w="full"
           maxW="1280px"
@@ -77,7 +83,7 @@ const HomePage = ({ books }: Props): JSX.Element => {
           </Flex>
 
           {!(Object.keys(books).length === 0) ? (
-            <BooksAccordion receiveBooks={receiveBooks} />
+            <BooksAccordion receiveBooks={receiveBooks} series={series} />
           ) : (
             <NotRegistered />
           )}

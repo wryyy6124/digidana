@@ -33,6 +33,7 @@ import { supabaseClient } from "@/utils/supabase/client";
 
 const Header = (): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const pathName = usePathname();
   const supabase = supabaseClient();
 
@@ -133,7 +134,7 @@ const Header = (): JSX.Element => {
                   as="li"
                   transition="0.4s"
                   _hover={{
-                    color: "red.400",
+                    color: "blue.400",
                   }}
                   w="full"
                 >
@@ -155,7 +156,7 @@ const Header = (): JSX.Element => {
                   as="li"
                   transition="0.4s"
                   _hover={{
-                    color: "red.400",
+                    color: "blue.400",
                   }}
                   w="full"
                 >
@@ -177,7 +178,7 @@ const Header = (): JSX.Element => {
                   as="li"
                   transition="0.4s"
                   _hover={{
-                    color: "red.400",
+                    color: "blue.400",
                   }}
                   w="full"
                 >
@@ -199,7 +200,7 @@ const Header = (): JSX.Element => {
                   as="li"
                   transition="0.4s"
                   _hover={{
-                    color: "red.400",
+                    color: "blue.400",
                   }}
                   w="full"
                 >
@@ -218,10 +219,11 @@ const Header = (): JSX.Element => {
               ) : null}
               <Box
                 as="li"
-                color="red.400"
+                color="red.500"
                 cursor="pointer"
                 fontWeight="bold"
                 transition="0.4s"
+                mt={10}
                 w="full"
                 onClick={() => {
                   onClose();

@@ -38,8 +38,9 @@ const VolumesIdPage = ({
   volume: booksType;
   series?: seriesType | undefined;
 }): JSX.Element => {
-  const volumeId: string = volume.volume_id;
   const router = useRouter();
+
+  const volumeId: string = volume.volume_id;
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -49,14 +50,14 @@ const VolumesIdPage = ({
   const supabase = supabaseClient();
   const seriesId: string = volume.series_id;
 
-  const [title, setTitle] = useState<string>("");
+  const [seriesTitle, setSeriesTitle] = useState<string>("");
   const [description, setDescription] = useState<string>(
     volume.description || ""
   );
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
   useEffect(() => {
-    const fetchSeries = async () => {
+    const fetchSeries = async (): Promise<void> => {
       if (seriesId) {
         try {
           const { data: seriesData, error: seriesError } = await supabase
@@ -71,7 +72,7 @@ const VolumesIdPage = ({
             return;
           }
 
-          setTitle(seriesData?.series_title);
+          setSeriesTitle(seriesData?.series_title);
         } catch (seriesError) {
           console.error(seriesError);
         }
@@ -80,9 +81,9 @@ const VolumesIdPage = ({
     };
 
     fetchSeries();
-  }, [supabase]);
+  }, [supabase, seriesId]);
 
-  const handleSaveDescription = async () => {
+  const handleSaveDescription = async (): Promise<void> => {
     try {
       const { error } = await supabase
         .from("volumes")
@@ -108,13 +109,13 @@ const VolumesIdPage = ({
         backgroundPosition="center"
         w="full"
         minH="100%"
-        py={100}
+        py={120}
       >
         <Flex
           justifyContent={{ base: "center", md: "flex-end" }}
           alignItems="center"
           mx="auto"
-          mb={16}
+          mb={8}
           p={{ base: 0, md: "1em" }}
           w="full"
           maxW="1024px"
@@ -135,8 +136,7 @@ const VolumesIdPage = ({
         {volume && (
           <Flex
             bg="white"
-            borderTop="1px"
-            borderTopColor="gray.200"
+            borderWidth={1}
             borderRadius={{ sm: "none", md: "md" }}
             boxShadow="md"
             flexFlow="column"
@@ -148,10 +148,10 @@ const VolumesIdPage = ({
           >
             <>
               <Flex flexFlow="column" gap={2}>
-                <Text as="h2" fontSize="3xl" fontWeight="bold">
+                <Text as="h2" color="blue.600" fontSize="3xl" fontWeight="bold">
                   {volume.title}
                 </Text>
-                <Flex gap={4} fontSize="md" color="gray.600">
+                <Flex gap={6} fontSize="md" color="gray.500">
                   {volume.publishedDate && (
                     <Text>発売日: {volume.publishedDate}</Text>
                   )}
@@ -184,7 +184,7 @@ const VolumesIdPage = ({
                       <Textarea
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        placeholder="任意の説明文を入力する"
+                        placeholder="任意の説明文を入力してください"
                         fontSize="lg"
                         resize="none"
                         minH={120}
@@ -198,7 +198,7 @@ const VolumesIdPage = ({
                         </Button>
                         <Button
                           onClick={() => setIsEditing(!isEditing)}
-                          colorScheme="green"
+                          colorScheme="gray"
                         >
                           キャンセル
                         </Button>
@@ -248,9 +248,10 @@ const VolumesIdPage = ({
 
         {loading && series && series.length > 1 ? (
           <Box mx="auto" mt={20} p={4} w="full" maxW="1024px">
-            {title && (
-              <Text as="h3" fontSize="2xl" fontWeight="bold" mb={4}>
-                <FaBookmark className={`inline mr-2`} />『{title}』シリーズ
+            {seriesTitle && (
+              <Text as="h3" fontSize="2xl" fontWeight="bold" mb={8}>
+                <FaBookmark className={`inline mr-2`} />『{seriesTitle}
+                』シリーズ
               </Text>
             )}
             <Grid
@@ -260,7 +261,7 @@ const VolumesIdPage = ({
                 md: "repeat(3, 1fr)",
                 xl: "repeat(4, 1fr)",
               }}
-              gap={6}
+              gap={8}
               rowGap={10}
             >
               {series
@@ -273,7 +274,7 @@ const VolumesIdPage = ({
                     className={`fade_in`}
                     style={{ animationDelay: `${index * 0.1}s` }}
                     bg="#fff"
-                    boxShadow="md"
+                    boxShadow="sm"
                     borderWidth={1}
                     borderRadius="md"
                     transition="0.4s"
@@ -283,21 +284,21 @@ const VolumesIdPage = ({
                     _hover={{
                       bg: "blue.50",
                       borderColor: "blue.400",
+                      boxShadow: "md",
                       color: "blue.400",
                     }}
                   >
                     <Text
-                      bg="blue.400"
+                      bg="blue.300"
                       boxShadow="md"
                       color="white"
-                      fontSize={{ base: "lg", md: "lg" }}
                       fontWeight="bold"
                       textAlign="center"
                       display="inline-block"
                       transform="rotate(-45deg)"
                       pos="absolute"
-                      top={{ base: "10px", md: "10px" }}
-                      left={{ base: "-30px", md: "-40px" }}
+                      top={{ base: "10px", md: "5px" }}
+                      left={{ base: "-30px", md: "-45px" }}
                       w={{ base: "120px", md: "150px" }}
                     >
                       <Flex
@@ -309,7 +310,7 @@ const VolumesIdPage = ({
                         p={1}
                       >
                         {book.order_number}
-                        <Box as="span" fontSize="75%">
+                        <Box as="span" fontSize="70%">
                           巻
                         </Box>
                       </Flex>
@@ -325,7 +326,7 @@ const VolumesIdPage = ({
                       w="full"
                       _hover={{ textDecoration: "none" }}
                     >
-                      <Box w="fitContent">
+                      <Box transform="rotate(5deg)" w="fitContent">
                         {book.thumbnail_url ? (
                           <Image
                             src={book.thumbnail_url}

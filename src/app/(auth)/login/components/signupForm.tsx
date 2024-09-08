@@ -1,10 +1,12 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Box, Button, Text, VStack } from "@chakra-ui/react";
 
 import { signup } from "../actions";
 import { InputField } from "./inputField";
+
+import Loading from "@/app/components/loading";
 
 export const SignupForm = (): JSX.Element => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -19,9 +21,14 @@ export const SignupForm = (): JSX.Element => {
     const formData: FormData = new FormData(e.currentTarget);
     const err: string | null = await signup(formData);
 
-    setIsLoading(false);
     err ? alert(err) : "";
   };
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
+
+  if (isLoading) return <Loading />;
 
   return (
     <>

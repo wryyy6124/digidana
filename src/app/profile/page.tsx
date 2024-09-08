@@ -16,9 +16,17 @@ const Profile = async (): Promise<JSX.Element> => {
     redirect("/login");
   }
 
-  console.log(user.email);
+  const { data: profile, error: profileError } = await supabase
+    .from("profiles")
+    .select("nick_name")
+    .eq("user_id", user.id)
+    .single();
 
-  return <ProfilePage />;
+  if (profileError) {
+    console.error("Error fetching profile:", profileError);
+  }
+
+  return <ProfilePage user={user} profile={profile || { nick_name: null }} />;
 };
 
 export default Profile;

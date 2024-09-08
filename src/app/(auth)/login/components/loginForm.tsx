@@ -1,26 +1,35 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Box, Button, Text, VStack } from "@chakra-ui/react";
 
 import { login } from "../actions";
 import { InputField } from "./inputField";
 
+import Loading from "@/app/components/loading";
+
 export const LoginForm = (): JSX.Element => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
+
     setIsLoading(true);
     setErrorMessage(null);
 
     const formData: FormData = new FormData(e.currentTarget);
     const error: string | null = await login(formData);
 
-    setIsLoading(false);
     error ? alert(error) : "";
   };
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
+
+  if (isLoading) return <Loading />;
 
   return (
     <>

@@ -1,10 +1,16 @@
 "use client";
 
 import { ChangeEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import Header from "@/app/components/header";
 import Footer from "@/app/components/footer";
-import Pagination from "./pagenation";
+
+import { register } from "../actions";
+
+import PagenationParts from "./pagenationParts";
+import SearchSummaryParts from "./searchSummaryParts";
+import MessageModal from "./messageModal";
 
 import {
   Box,
@@ -17,17 +23,12 @@ import {
   InputRightElement,
   UnorderedList,
   ListItem,
-  Link,
 } from "@chakra-ui/react";
 
 import { Search2Icon } from "@chakra-ui/icons";
 import { motion } from "framer-motion";
 
-import { register } from "../actions";
-import MessageModal from "./messageModal";
-
 import { AiOutlineFileSearch } from "react-icons/ai";
-import { useRouter } from "next/navigation";
 import { MdAppRegistration } from "react-icons/md";
 
 const ITEMS_PER_PAGE = 8;
@@ -165,15 +166,17 @@ const SearchBooksPage = (): JSX.Element => {
         backgroundPosition="center"
         w="full"
         minH="100%"
-        py={100}
+        py={120}
       >
         <Box
           id={`seriesRegistration`}
           mx="auto"
-          p={8}
-          pb={32}
+          px={{
+            base: 4,
+            md: 8,
+          }}
           w="full"
-          maxW="1024px"
+          maxW="1280px"
         >
           <Text
             as="h2"
@@ -185,11 +188,19 @@ const SearchBooksPage = (): JSX.Element => {
             fontWeight="bold"
             mb={10}
           >
-            <AiOutlineFileSearch className="mt-2" />
+            <AiOutlineFileSearch className={`mt-2`} />
             書籍検索
           </Text>
 
-          <InputGroup id={`searchBooksPage__input`} size="md" mb={10} w="full">
+          <InputGroup
+            id={`searchBooksPage__input`}
+            size="md"
+            mb={{
+              base: 4,
+              md: 8,
+            }}
+            w="full"
+          >
             <Input
               type="text"
               value={query}
@@ -230,7 +241,7 @@ const SearchBooksPage = (): JSX.Element => {
           {searchFlag ? (
             <Box id={`searchBooksPage__result`}>
               {totalPages > 1 && (
-                <Pagination
+                <PagenationParts
                   totalPages={totalPages}
                   currentPage={currentPage}
                   handlePageChange={handlePageChange}
@@ -351,7 +362,7 @@ const SearchBooksPage = (): JSX.Element => {
                           ) : (
                             <Image
                               src={`/not_image.jpg`}
-                              alt={`NOT IMAFGE`}
+                              alt={`notimage`}
                               w="full"
                               h="auto"
                             />
@@ -365,10 +376,10 @@ const SearchBooksPage = (): JSX.Element => {
                           alignItems={"center"}
                           fontSize={{ base: "sm", md: "xl" }}
                           textAlign="left"
-                          p={{ base: 5, md: 10 }}
                           overflow="hidden"
                           overflowWrap="break-word"
                           whiteSpace="pre-wrap"
+                          p={{ base: 5, md: 10 }}
                           w={{ base: "65%", md: "100%" }}
                         >
                           {book.volumeInfo.description ? (
@@ -381,7 +392,7 @@ const SearchBooksPage = (): JSX.Element => {
                               fontSize="sm"
                               fontStyle="italic"
                             >
-                              掲載用のテキストデータがないようです🤔
+                              掲載用のテキストデータがないようです...🤔
                             </Box>
                           )}
                         </Text>
@@ -451,7 +462,7 @@ const SearchBooksPage = (): JSX.Element => {
               </UnorderedList>
 
               {totalPages > 1 && paginatedBooks.length > ITEMS_PER_PAGE / 2 && (
-                <Pagination
+                <PagenationParts
                   totalPages={totalPages}
                   currentPage={currentPage}
                   handlePageChange={handlePageChange}
@@ -459,38 +470,7 @@ const SearchBooksPage = (): JSX.Element => {
               )}
             </Box>
           ) : (
-            <Text
-              bg="white"
-              boxShadow="md"
-              borderWidth={1}
-              borderColor="gray.300"
-              borderRadius="md"
-              fontSize="md"
-              p={6}
-            >
-              <Link
-                href={`https://developers.google.com/books?hl=ja`}
-                color="blue.400"
-                fontWeight="bold"
-                transition="0.4s"
-                _hover={{
-                  color: "red.400",
-                }}
-              >
-                Google Books API
-              </Link>
-              （以下、API）を活用して、書籍情報を検索し自分だけのデジタル本棚を作成できます。
-              <br />
-              まず、検索バーへ書籍のタイトルを入力してください。（APIの性質上、必ずヒットするとは限りません）
-              <br />
-              その後、検索ボタンを押すとAPIから取得した検索結果が表示（最大40件）されます。
-              <br />
-              一覧から追加したい対象書籍の登録ボタンを押下してください。
-              <br />
-              すると、トップページのマイライブラリの一覧へ追加されます！
-              <br />
-              ※APIは1日あたりのリクエスト数に限りがあります。リクエストの乱用はご遠慮ください😞
-            </Text>
+            <SearchSummaryParts />
           )}
         </Box>
       </Box>

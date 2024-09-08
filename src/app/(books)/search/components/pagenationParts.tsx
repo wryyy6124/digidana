@@ -8,7 +8,7 @@ interface PaginationProps {
   handlePageChange: (page: number) => void;
 }
 
-const Pagination = ({
+const PagenationParts = ({
   totalPages,
   currentPage,
   handlePageChange,
@@ -28,4 +28,4 @@ const Pagination = ({
   </Flex>
 );
 
-export default Pagination;
+export default PagenationParts;
