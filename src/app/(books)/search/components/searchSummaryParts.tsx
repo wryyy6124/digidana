@@ -69,7 +69,7 @@ const SearchSummaryParts = (): JSX.Element => (
           color="red.500"
           _notLast={{ marginBottom: 1 }}
         >
-          ※APIの仕様で曖昧検索が出来ない為、目的のデータが見つかるするとは限りません😞
+          ※APIの仕様で曖昧検索が出来ない為、目的のデータが見つかるとは限りません😞
         </Text>
       </Box>
     </Box>
