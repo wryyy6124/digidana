@@ -104,17 +104,46 @@ const ProfilePage: React.FC<ProfileProps> = ({
         bg="linear-gradient(135deg, #f7fafc 25%, #fdfdfd 25%, #fdfdfd 50%, #f7fafc 50%, #f7fafc 75%, #fdfdfd 75%, #fdfdfd 100%)"
         backgroundSize="1000px 1000px"
         backgroundPosition="center"
+        py={{
+          base: 100,
+          md: 120,
+        }}
         w="full"
         minH="100%"
-        py={120}
       >
-        <Box id={`profilePage__inner`} mx="auto" px={8} w="full" maxW="1280px">
-          <Text as="h2" fontSize="3xl" fontWeight="bold" mb={10}>
-            <Flex alignItems="center" gap={2}>
+        <Box
+          id={`profilePage__inner`}
+          mx="auto"
+          px={{
+            base: 4,
+            md: 8,
+          }}
+          w="full"
+          maxW="1280px"
+        >
+          <Flex
+            justifyContent="space-between"
+            mb={{
+              base: 5,
+              md: 10,
+            }}
+          >
+            <Text
+              as="h2"
+              id={`profilePage__header`}
+              display="inline-flex"
+              alignItems="center"
+              gap={4}
+              fontSize={{
+                base: "2xl",
+                lg: "3xl",
+              }}
+              fontWeight="bold"
+            >
               <FaCircleUser />
               ユーザ情報
-            </Flex>
-          </Text>
+            </Text>
+          </Flex>
 
           <Box
             bg="white"

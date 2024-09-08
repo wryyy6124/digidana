@@ -124,12 +124,18 @@ const BooksAccordion = ({
               <Text
                 as="h3"
                 flex="1"
-                fontSize="xl"
+                fontSize={{
+                  base: "sm",
+                  md: "lg",
+                }}
                 fontWeight="bold"
                 textAlign="left"
                 transition="background 0.4s"
                 px="1em"
-                py={8}
+                py={{
+                  base: "4",
+                  md: "6",
+                }}
               >
                 <GiOpenBook className="inline mr-2" />
                 {series_id === "null"
@@ -254,7 +260,7 @@ const BooksAccordion = ({
                           )}
                         </Flex>
                       </Flex>
-                      <Flex justifyContent="center" gap={10}>
+                      <Flex justifyContent="center" fontSize="sm" gap={10}>
                         <Button
                           backgroundColor="blue.600"
                           display="flex"

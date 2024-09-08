@@ -60,23 +60,46 @@ const SeriesIdPage = ({ seriesData }: seriesProps): JSX.Element => {
         bg="linear-gradient(90deg, #f7fafc 25%, #fdfdfd 25%, #fdfdfd 50%, #f7fafc 50%, #f7fafc 75%, #fdfdfd 75%, #fdfdfd 100%)"
         backgroundSize="1000px 1000px"
         backgroundPosition="center"
+        py={{
+          base: 100,
+          md: 120,
+        }}
         w="full"
         minH="100%"
-        py={120}
       >
-        <Box id={`SeriesIdPage__inner`} mx="auto" px={8} w="full" maxW="1280px">
-          <Text
-            as="h2"
-            id={`SeriesIdPage__header`}
-            display="inline-flex"
-            alignItems="center"
-            fontSize="3xl"
-            fontWeight="bold"
-            mb={10}
+        <Box
+          id={`SeriesIdPage__inner`}
+          mx="auto"
+          px={{
+            base: 4,
+            md: 8,
+          }}
+          w="full"
+          maxW="1280px"
+        >
+          <Flex
+            justifyContent="space-between"
+            mb={{
+              base: 5,
+              md: 10,
+            }}
           >
-            <LuClipboardEdit />
-            シリーズ名編集
-          </Text>
+            <Text
+              as="h2"
+              id={`SeriesIdPage__header`}
+              display="inline-flex"
+              alignItems="center"
+              gap={4}
+              fontSize={{
+                base: "2xl",
+                lg: "3xl",
+              }}
+              fontWeight="bold"
+            >
+              <LuClipboardEdit />
+              シリーズ名編集
+            </Text>
+          </Flex>
 
           <Box
             border="2px solid #888"
@@ -85,22 +108,33 @@ const SeriesIdPage = ({ seriesData }: seriesProps): JSX.Element => {
             color="black"
             fontSize="2xl"
             fontWeight="bold"
-            p={6}
+            p={{
+              base: 2,
+              md: 4,
+              xl: 6,
+            }}
           >
             {!(Object.keys(seriesData).length === 0) ? (
               seriesData.map((data) => (
                 <Box
                   key={data.series_id}
                   bg="white"
-                  fontSize="xl"
-                  p={4}
+                  fontSize={{
+                    base: "sm",
+                    md: "md",
+                    lg: "xl",
+                  }}
+                  p={{
+                    base: 2,
+                    md: 4,
+                  }}
                   _notLast={{
                     borderBottomWidth: 1,
                     borderBottomStyle: "dashed",
                   }}
                 >
                   {editSeriesId === data.series_id ? (
-                    <Flex alignItems="center" gap={4}>
+                    <Flex alignItems="center" gap={2}>
                       <Input
                         value={newSeriesTitle}
                         onChange={(e) => setNewSeriesTitle(e.target.value)}
@@ -112,13 +146,20 @@ const SeriesIdPage = ({ seriesData }: seriesProps): JSX.Element => {
                       <Button
                         onClick={() => setEditSeriesId(null)}
                         colorScheme="gray"
+                        fontSize="sm"
                       >
-                        キャンセル
+                        戻る
                       </Button>
                     </Flex>
                   ) : (
                     <Flex alignItems="center" gap={4}>
-                      <Text p={2} w="full">
+                      <Text
+                        p={{
+                          base: 0,
+                          md: 2,
+                        }}
+                        w="full"
+                      >
                         {data.series_title}
                       </Text>
                       <Button

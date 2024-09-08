@@ -1,46 +1,36 @@
-お疲れ様です。
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-リスキルプランで学習をしている tamura です。
-この度、オリジナルアプリが完成しましたのでお披露目投稿します。
+## Getting Started
 
-▼ 自作アプリについて
-アプリ名: デジダナ
+First, run the development server:
 
-▼ 制作期間
-約 1 ヶ月間
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-▼Github
-https://github.com/wryyy6124/digidana
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-▼ アプリ URL
-https://digidana.vercel.app/
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-確認用アカウント
-メールアドレス:
-パスワード:
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-▼ 作成した目的
-転職
+## Learn More
 
-▼ 使用技術
-【フロントエンド】
-HTML
-CSS
-Javascript
-React.js
-Next.js
-TypeScript
-Chakra-ui
-Tailwind.css（一部）
+To learn more about Next.js, take a look at the following resources:
 
-【バックエンド】
-Supabase
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-【API】
-Google Books API
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-【デプロイ】
-Vercel
+## Deploy on Vercel
 
-◆ 感想
-メンターの @Jun N(ジュン)/Mentor さんに色々とご助言を頂きオリジナルアプリを完成させることができました！
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

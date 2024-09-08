@@ -164,9 +164,12 @@ const SearchBooksPage = (): JSX.Element => {
         bg="linear-gradient(90deg, #f7fafc 25%, #fdfdfd 25%, #fdfdfd 50%, #f7fafc 50%, #f7fafc 75%, #fdfdfd 75%, #fdfdfd 100%)"
         backgroundSize="1000px 1000px"
         backgroundPosition="center"
+        py={{
+          base: 100,
+          md: 120,
+        }}
         w="full"
         minH="100%"
-        py={120}
       >
         <Box
           id={`seriesRegistration`}
@@ -178,19 +181,29 @@ const SearchBooksPage = (): JSX.Element => {
           w="full"
           maxW="1280px"
         >
-          <Text
-            as="h2"
-            id={`volumesIdPage__header`}
-            gap={2}
-            display="inline-flex"
-            alignItems="center"
-            fontSize="3xl"
-            fontWeight="bold"
-            mb={10}
+          <Flex
+            justifyContent="space-between"
+            mb={{
+              base: 5,
+              md: 10,
+            }}
           >
-            <AiOutlineFileSearch className={`mt-2`} />
-            書籍検索
-          </Text>
+            <Text
+              as="h2"
+              id={`seriesRegistration__header`}
+              display="inline-flex"
+              alignItems="center"
+              gap={4}
+              fontSize={{
+                base: "2xl",
+                lg: "3xl",
+              }}
+              fontWeight="bold"
+            >
+              <AiOutlineFileSearch />
+              書籍検索
+            </Text>
+          </Flex>
 
           <InputGroup
             id={`searchBooksPage__input`}

@@ -107,9 +107,12 @@ const VolumesIdPage = ({
         bg="linear-gradient(135deg, #f7fafc 25%, #fdfdfd 25%, #fdfdfd 50%, #f7fafc 50%, #f7fafc 75%, #fdfdfd 75%, #fdfdfd 100%)"
         backgroundSize="1000px 1000px"
         backgroundPosition="center"
+        py={{
+          base: 100,
+          md: 120,
+        }}
         w="full"
         minH="100%"
-        py={120}
       >
         <Flex
           justifyContent={{ base: "center", md: "flex-end" }}
@@ -142,16 +145,29 @@ const VolumesIdPage = ({
             flexFlow="column"
             gap={6}
             mx="auto"
-            p={6}
+            p={{ base: 4, md: 6 }}
             w="full"
             maxW="1024px"
           >
             <>
               <Flex flexFlow="column" gap={2}>
-                <Text as="h2" color="blue.600" fontSize="3xl" fontWeight="bold">
+                <Text
+                  as="h2"
+                  color="blue.600"
+                  fontSize={{
+                    base: "xl",
+                    md: "2xl",
+                    lg: "3xl",
+                  }}
+                  fontWeight="bold"
+                >
                   {volume.title}
                 </Text>
-                <Flex gap={6} fontSize="md" color="gray.500">
+                <Flex
+                  gap={6}
+                  fontSize={{ base: "sm", md: "md" }}
+                  color="gray.500"
+                >
                   {volume.publishedDate && (
                     <Text>発売日: {volume.publishedDate}</Text>
                   )}
@@ -209,7 +225,11 @@ const VolumesIdPage = ({
                       <Text
                         display="flex"
                         alignItems="center"
-                        fontSize="xl"
+                        fontSize={{
+                          base: "sm",
+                          md: "md",
+                          lg: "xl",
+                        }}
                         minH={120}
                       >
                         {description || "説明テキストが空白のようです"}
@@ -247,11 +267,16 @@ const VolumesIdPage = ({
         )}
 
         {loading && series && series.length > 1 ? (
-          <Box mx="auto" mt={20} p={4} w="full" maxW="1024px">
+          <Box mx="auto" mt={10} p={4} w="full" maxW="1024px">
             {seriesTitle && (
-              <Text as="h3" fontSize="2xl" fontWeight="bold" mb={8}>
+              <Text
+                as="h3"
+                fontSize={{ base: "xl", lg: "2xl" }}
+                fontWeight="bold"
+                mb={{ base: 4, md: 8 }}
+              >
                 <FaBookmark className={`inline mr-2`} />『{seriesTitle}
-                』シリーズ
+                』シリーズの書籍
               </Text>
             )}
             <Grid
@@ -261,8 +286,8 @@ const VolumesIdPage = ({
                 md: "repeat(3, 1fr)",
                 xl: "repeat(4, 1fr)",
               }}
-              gap={8}
-              rowGap={10}
+              gap={{ base: 4, md: 8 }}
+              rowGap={{ base: 6, md: 12 }}
             >
               {series
                 .filter((book) => book.volume_id !== volumeId)

@@ -34,9 +34,15 @@ const Footer = (): JSX.Element => {
         fontSize="sm"
         alignItems="center"
         justifyContent="space-between"
-        gap={10}
+        gap={{
+          base: 4,
+          md: 8,
+        }}
         mx="auto"
-        px={4}
+        px={{
+          base: 2,
+          md: 4,
+        }}
         py={1}
         w="full"
         maxW="1280px"

@@ -31,7 +31,7 @@ const HomePage = ({ books, series }: HomePageProps): JSX.Element => {
 
   useEffect(() => {
     router.refresh();
-  }, [router, books, series]);
+  }, [router]);
 
   const groupBooksBySeries = (books: booksType[]) => {
     return books.reduce((acc, book) => {
@@ -54,30 +54,43 @@ const HomePage = ({ books, series }: HomePageProps): JSX.Element => {
         bg="linear-gradient(90deg, #f7fafc 25%, #fdfdfd 25%, #fdfdfd 50%, #f7fafc 50%, #f7fafc 75%, #fdfdfd 75%, #fdfdfd 100%)"
         backgroundSize="1000px 1000px"
         backgroundPosition="center"
+        py={{
+          base: 100,
+          md: 120,
+        }}
         w="full"
         minH="100%"
-        py={120}
       >
         <Box
           id={`home__inner`}
           mx="auto"
           px={{
-            base: 4,
+            base: 6,
             md: 8,
           }}
           w="full"
           maxW="1280px"
         >
-          <Flex justifyContent="space-between" mb={10}>
+          <Flex
+            justifyContent="space-between"
+            mb={{
+              base: 5,
+              md: 10,
+            }}
+          >
             <Text
               as="h2"
               id={`home__header`}
               display="inline-flex"
               alignItems="center"
-              fontSize="3xl"
+              gap={4}
+              fontSize={{
+                base: "2xl",
+                lg: "3xl",
+              }}
               fontWeight="bold"
             >
-              <GiBookshelf className={`inline mr-2`} />
+              <GiBookshelf />
               マイライブラリ
             </Text>
           </Flex>
