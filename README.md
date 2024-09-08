@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## アプリ名称
 
-## Getting Started
+デジダナ - Digital Hondana -
 
-First, run the development server:
+## アプリ概要
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+[Google Books API](https://developers.google.com/books?hl=ja)（以下、API）を活用して、自分だけのデジタル本棚を作成できる Web ブラウザアプリです。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## URL
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+https://digidana.vercel.app/
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 制作期間
 
-## Learn More
+約 1 ヶ月間
 
-To learn more about Next.js, take a look at the following resources:
+## 画面構成
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### ▼ トップページ【/】
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+登録済みの「マイライブラリ（書籍一覧）」がこのページにて表示されます。  
+一覧からは各書籍の詳細画面への遷移導線や削除リクエストを行なう事が可能です。
 
-## Deploy on Vercel
+### ▼ ログイン【/login】
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+アプリへのログイン・新規登録を行なう為のページです。  
+非認証状態の場合はこのページへ強制リダイレクトされます。  
+※認証済みの場合はトップページへリダイレクトされる。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### ▼ ユーザー情報【/profile】
+
+ユーザー名やパスワードの変更を行なう為のページです。
+
+### ▼ 書籍検索・登録【/search】
+
+ページ上部の入力フォームへ  
+登録したい書籍名をテキストボックスへ入力すると、  
+API に対してリクエストを行なう事が出来ます。
+
+### ▼ シリーズ名編集【/series】
+
+登録済みのシリーズタイトルについて編集を行なう為のページです。
+
+具体的には登録時に自動入力されるタイトルテキストを  
+任意の内容に個別でライティングが出来ます。
+
+### ▼ 書籍詳細情報【/volumes/[volumeId]】
+
+登録済み書籍の詳細情報（説明文など）を掲載しています。
+
+同一シリーズの書籍データが複数存在する場合、  
+他書籍ページへのリンク導線についても一覧で表示されます。
+
+## 使用技術
+
+### ▼ Front End
+
+- HTML
+- CSS
+- Javascript
+- TypeScript
+- React.js
+- Next.js
+- Chakra UI
+- Tailwind.css
+  一部の UI へ補助的に利用
+
+### ▼ Back End
+
+- Supabase  
+  書籍データの保存に利用。
+
+### ▼ API
+
+- Google Books API  
+  書籍データの取得に利用。
+
+### ▼ デプロイ
+
+- Vercel
