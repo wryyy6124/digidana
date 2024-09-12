@@ -3,7 +3,7 @@
 import HomePage from "./components/homePage";
 import { supabaseServer } from "@/utils/supabase/server";
 
-const HomeServer = async (): Promise<JSX.Element> => {
+const HomeServer = async (): Promise<JSX.Element | undefined> => {
   const supabase = supabaseServer();
 
   try {
@@ -20,10 +20,10 @@ const HomeServer = async (): Promise<JSX.Element> => {
       .select();
 
     if (seriesError) {
-      console.error(`Error fetching series data: ${seriesError}`);
+      throw new Error(`Error fetching series data: ${seriesError}`);
     }
 
-    return <HomePage books={books} series={series || []} />;
+    return <HomePage books={books} series={series} />;
   } catch (error) {
     console.error(`Could not be obtained due to some Error: ${error}`);
   }
