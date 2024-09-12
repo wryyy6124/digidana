@@ -6,37 +6,29 @@ import { supabaseServer } from "@/utils/supabase/server";
 const HomeServer = async (): Promise<JSX.Element> => {
   const supabase = supabaseServer();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
   try {
-    if (user) {
-      const { data: books, error: booksError } = await supabase
-        .from("volumes")
-        .select();
+    const { data: books, error: booksError } = await supabase
+      .from("volumes")
+      .select();
 
-      if (booksError) {
-        console.error("Error fetching books data:", booksError);
-      }
-
-      const { data: series, error: seriesError } = await supabase
-        .from("series")
-        .select();
-
-      if (seriesError) {
-        console.error("Error fetching series data:", seriesError);
-      }
-
-      return <HomePage books={books || []} series={series || []} />;
-    } else {
-      return <HomePage books={[]} series={[]} />;
+    if (booksError) {
+      throw new Error(`Error fetching books data: ${booksError}`);
     }
-  } catch (error) {
-    console.error("Error:", error);
 
-    return <HomePage books={[]} series={[]} />;
+    const { data: series, error: seriesError } = await supabase
+      .from("series")
+      .select();
+
+    if (seriesError) {
+      console.error(`Error fetching series data: ${seriesError}`);
+    }
+
+    return <HomePage books={books} series={series || []} />;
+  } catch (error) {
+    console.error(`Could not be obtained due to some Error: ${error}`);
   }
+
+  return <HomePage books={[]} series={[]} />;
 };
 
 export default HomeServer;

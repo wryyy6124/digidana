@@ -13,13 +13,12 @@ import BooksAccordion from "./booksAccordion";
 import { GiBookshelf } from "react-icons/gi";
 
 interface seriesType {
-  created_at: string;
+  id: string;
   user_id: string;
   series_id: string;
   series_title: string;
-  id: string;
+  created_at: string;
 }
-[];
 
 interface HomePageProps {
   books: booksType[];
