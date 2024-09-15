@@ -12,19 +12,6 @@ import BooksAccordion from "./booksAccordion";
 
 import { GiBookshelf } from "react-icons/gi";
 
-interface seriesType {
-  id: string;
-  user_id: string;
-  series_id: string;
-  series_title: string;
-  created_at: string;
-}
-
-interface HomePageProps {
-  books: booksType[];
-  series: seriesType[];
-}
-
 const HomePage = ({ books, series }: HomePageProps): JSX.Element => {
   const router = useRouter();
 

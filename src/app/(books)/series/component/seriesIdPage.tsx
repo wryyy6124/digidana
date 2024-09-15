@@ -11,17 +11,11 @@ import { useRouter } from "next/navigation";
 import { BsInfoSquareFill } from "react-icons/bs";
 import { LuClipboardEdit } from "react-icons/lu";
 
-interface seriesProps {
-  seriesData: {
-    created_at: string;
-    user_id: string;
-    series_id: string;
-    series_title: string;
-    id: string;
-  }[];
-}
-
-const SeriesIdPage = ({ seriesData }: seriesProps): JSX.Element => {
+const SeriesIdPage = ({
+  seriesData,
+}: {
+  seriesData: seriesType[];
+}): JSX.Element => {
   const router = useRouter();
   const supabase = supabaseClient();
 

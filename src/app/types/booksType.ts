@@ -14,3 +14,16 @@ type booksType = {
   infoLink: string;
   id: string;
 };
+
+type seriesType = {
+  id: string;
+  user_id: string;
+  series_id: string;
+  series_title: string;
+  created_at: string;
+};
+
+interface HomePageProps {
+  books: booksType[];
+  series: seriesType[];
+}
