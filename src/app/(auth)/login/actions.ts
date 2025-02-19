@@ -6,6 +6,12 @@ import { redirect } from "next/navigation";
 import { supabaseServer } from "@/utils/supabase/server";
 import { AuthError } from "@supabase/supabase-js";
 
+console.log("【SERVER】SUPABASE_URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
+console.log(
+  "【SERVER】SUPABASE_ANON_KEY:",
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);
+
 export async function login(formData: FormData): Promise<string | null> {
   const supabase = supabaseServer();
 

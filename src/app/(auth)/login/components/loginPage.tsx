@@ -12,6 +12,12 @@ const LoginPage = (): JSX.Element => {
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const toggleForm = () => setIsLogin(!isLogin);
 
+  console.log("【CLIENT】SUPABASE_URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
+  console.log(
+    "【CLIENT】SUPABASE_ANON_KEY:",
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
+
   return (
     <>
       <Flex
